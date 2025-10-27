@@ -9,14 +9,14 @@ const WhatsAppFloat = () => {
 
   return (
     <div 
-      className="fixed bottom-5 left-5 z-50 cursor-pointer group"
-      style={{ bottom: '20px', left: '20px' }}
+      className="fixed bottom-5 right-5 z-50 cursor-pointer group"
+      style={{ bottom: '16px', right: '16px' }}
       onClick={handleWhatsAppClick}
     >
-      <div className="bg-whatsapp-green rounded-full p-4 shadow-lg hover:scale-110 hover:shadow-[0_0_10px_#25D366] transition-all duration-300">
+      <div className="bg-whatsapp-green rounded-full p-2.5 shadow-lg hover:scale-110 hover:shadow-[0_0_10px_#25D366] transition-all duration-300">
         {/* WhatsApp SVG Icon */}
         <svg 
-          className="w-10 h-10 text-white" 
+          className="w-6 h-6 text-white" 
           fill="currentColor" 
           viewBox="0 0 24 24"
         >

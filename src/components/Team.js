@@ -54,7 +54,14 @@ const Team = () => {
         setFormStatus('Message sent successfully!');
         e.currentTarget.reset();
       } else {
-        setFormStatus('Failed to send. Try again later.');
+        let msg = 'Failed to send. Try again later.';
+        try {
+          const j = await res.json();
+          if (j && j.errors && j.errors.length) {
+            msg = j.errors.map((e) => e.message).join(', ');
+          }
+        } catch {}
+        setFormStatus(msg);
       }
     } catch (err) {
       setFormStatus('Failed to send. Check your connection and try again.');
@@ -380,6 +387,8 @@ const Team = () => {
               </p>
 
               <form className="space-y-6" onSubmit={handleContactSubmit}>
+                <input type="hidden" name="_subject" value="New Contact via SoftXSolutions" />
+                <input type="text" name="_gotcha" className="hidden" tabIndex="-1" autoComplete="off" />
                 <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
                   <div>
                     <label className="block text-white text-sm mb-2">Full Name</label>

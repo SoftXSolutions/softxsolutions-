@@ -17,20 +17,48 @@ const Contact = () => {
     });
   };
 
-  const handleSubmit = (e) => {
+  const [status, setStatus] = useState("");
+  const [submitting, setSubmitting] = useState(false);
+
+  const handleSubmit = async (e) => {
     e.preventDefault();
-    // Handle form submission here
-    console.log('Form submitted:', formData);
-    // Reset form
-    setFormData({
-      name: '',
-      email: '',
-      phone: '',
-      company: '',
-      service: '',
-      message: ''
-    });
-    alert('Thank you for your message! We will get back to you soon.');
+    setStatus("");
+    setSubmitting(true);
+    try {
+      const data = new FormData();
+      data.append('name', formData.name);
+      data.append('email', formData.email);
+      data.append('phone', formData.phone);
+      data.append('company', formData.company);
+      data.append('service', formData.service);
+      data.append('message', formData.message);
+      data.append('_subject', 'New Contact via SoftXSolutions');
+      data.append('_gotcha', '');
+
+      const res = await fetch('https://formspree.io/f/mdkpanqg', {
+        method: 'POST',
+        body: data,
+        headers: { 'Accept': 'application/json' }
+      });
+
+      if (res.ok) {
+        setStatus('✅ Message sent successfully!');
+        setFormData({ name: '', email: '', phone: '', company: '', service: '', message: '' });
+      } else {
+        let msg = '❌ Failed to send. Try again later.';
+        try {
+          const j = await res.json();
+          if (j && j.errors && j.errors.length) {
+            msg = j.errors.map((er) => er.message).join(', ');
+          }
+        } catch {}
+        setStatus(msg);
+      }
+    } catch (err) {
+      setStatus('❌ Failed to send. Check your connection and try again.');
+    } finally {
+      setSubmitting(false);
+    }
   };
 
   const contactInfo = [
@@ -234,10 +262,14 @@ const Contact = () => {
 
               <button
                 type="submit"
-                className="w-full bg-orange-gradient text-softx-white px-8 py-4 rounded-lg font-semibold text-lg hover:shadow-lg hover:shadow-softx-orange/25 transition-all duration-300"
+                disabled={submitting}
+                className="w-full bg-orange-gradient text-softx-white px-8 py-4 rounded-lg font-semibold text-lg hover:shadow-lg hover:shadow-softx-orange/25 transition-all duration-300 disabled:opacity-60 disabled:cursor-not-allowed"
               >
-                Send Message
+                {submitting ? 'Sending…' : 'Send Message'}
               </button>
+              {status && (
+                <p className="text-softx-orange text-sm">{status}</p>
+              )}
             </form>
           </div>
         </div>

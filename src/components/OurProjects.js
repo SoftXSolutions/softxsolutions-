@@ -133,7 +133,7 @@ const OurProjects = () => {
       { title: 'Services', items: ['Model Training','Calling Agents','Custom Workflows','Custom Chatbots'] }
     ],
     'Mobile Apps': [
-      { title: 'Mobile Apps', items: ['Konlin','GO','Flutter','Awift'] }
+      { title: 'Mobile Apps', items: ['Konlin','GO','Flutter','Swift'] }
     ],
     'Database': [
       { title: 'Database', items: ['Mysql','Postgresl','Mongodb','Solr'] }
