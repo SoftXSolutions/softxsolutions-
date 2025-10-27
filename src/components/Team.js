@@ -1,5 +1,5 @@
 import { motion, useSpring } from 'framer-motion';
-import { useEffect, useRef } from 'react';
+import { useEffect, useRef, useState } from 'react';
 import ImagePlaceholder from './ImagePlaceholder';
 import person1Image from '../assets/images/person1.png';
 import person2Image from '../assets/images/p2.png';
@@ -36,6 +36,32 @@ const AnimatedNumber = ({ value, delay = 0, suffix = "" }) => {
 };
 
 const Team = () => {
+  const [formStatus, setFormStatus] = useState("");
+  const [submitting, setSubmitting] = useState(false);
+
+  const handleContactSubmit = async (e) => {
+    e.preventDefault();
+    setFormStatus("");
+    setSubmitting(true);
+    try {
+      const data = new FormData(e.currentTarget);
+      const res = await fetch('https://formspree.io/f/mdkpanqg', {
+        method: 'POST',
+        body: data,
+        headers: { 'Accept': 'application/json' }
+      });
+      if (res.ok) {
+        setFormStatus('Message sent successfully!');
+        e.currentTarget.reset();
+      } else {
+        setFormStatus('Failed to send. Try again later.');
+      }
+    } catch (err) {
+      setFormStatus('Failed to send. Check your connection and try again.');
+    } finally {
+      setSubmitting(false);
+    }
+  };
   // Ultra-smooth animation variants
   const containerVariants = {
     hidden: { opacity: 0 },
@@ -353,20 +379,23 @@ const Team = () => {
                 We can give you the best solutions for your query.
               </p>
 
-              <form className="space-y-6">
+              <form className="space-y-6" onSubmit={handleContactSubmit}>
                 <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
                   <div>
                     <label className="block text-white text-sm mb-2">Full Name</label>
                     <input
                       type="text"
+                      name="name"
                       placeholder="Add Name"
                       className="w-full bg-transparent border-b border-gray-600 text-white placeholder-gray-500 py-2 focus:border-softx-orange outline-none"
+                      required
                     />
                   </div>
                   <div>
                     <label className="block text-white text-sm mb-2">Subject</label>
                     <input
                       type="text"
+                      name="subject"
                       placeholder="Add Subject"
                       className="w-full bg-transparent border-b border-gray-600 text-white placeholder-gray-500 py-2 focus:border-softx-orange outline-none"
                     />
@@ -378,14 +407,17 @@ const Team = () => {
                     <label className="block text-white text-sm mb-2">Email Address</label>
                     <input
                       type="email"
+                      name="email"
                       placeholder="Add email"
                       className="w-full bg-transparent border-b border-gray-600 text-white placeholder-gray-500 py-2 focus:border-softx-orange outline-none"
+                      required
                     />
                   </div>
                   <div>
                     <label className="block text-white text-sm mb-2">Contact Number</label>
                     <input
                       type="tel"
+                      name="phone"
                       placeholder="Add Number"
                       className="w-full bg-transparent border-b border-gray-600 text-white placeholder-gray-500 py-2 focus:border-softx-orange outline-none"
                     />
@@ -395,15 +427,18 @@ const Team = () => {
                 <div>
                   <label className="block text-white text-sm mb-2">How can we help?</label>
                   <textarea
+                    name="message"
                     placeholder="Feel free to ask for a solution!"
                     rows="4"
                     className="w-full bg-transparent border border-gray-600 rounded-lg text-white placeholder-gray-500 p-4 focus:border-softx-orange outline-none resize-none"
+                    required
                   ></textarea>
                 </div>
 
                 <motion.button
                   type="submit"
-                  className="bg-softx-orange text-white px-8 py-3 rounded-full font-semibold"
+                  disabled={submitting}
+                  className="bg-softx-orange text-white px-8 py-3 rounded-full font-semibold disabled:opacity-60 disabled:cursor-not-allowed"
                   whileHover={{
                     scale: 1.05,
                     boxShadow: "0 8px 25px rgba(255, 107, 0, 0.4)",
@@ -414,8 +449,12 @@ const Team = () => {
                     transition: { duration: 0.1 }
                   }}
                 >
-                  Send Message
+                  {submitting ? 'Sending...' : 'Send Message'}
                 </motion.button>
+
+                {formStatus && (
+                  <p className="text-softx-orange text-sm mt-2">{formStatus}</p>
+                )}
               </form>
             </motion.div>
 
