@@ -1,4 +1,5 @@
 
+import { motion } from 'framer-motion';
 import ImagePlaceholder from './ImagePlaceholder';
 import wcuImage from '../assets/images/wcu.png';
 import wcu1Image from '../assets/images/wcu1.png';
@@ -6,6 +7,81 @@ import outprojectp1Image from '../assets/images/ourprojectp1.png';
 import wcumImage from '../assets/images/wcum.png';
 
 const Services = () => {
+  // Animation variants
+  const containerVariants = {
+    hidden: { opacity: 0 },
+    visible: {
+      opacity: 1,
+      transition: {
+        staggerChildren: 0.2,
+        delayChildren: 0.1
+      }
+    }
+  };
+
+  const leftContentVariants = {
+    hidden: {
+      opacity: 0,
+      x: -50
+    },
+    visible: {
+      opacity: 1,
+      x: 0,
+      transition: {
+        duration: 1,
+        ease: "easeOut"
+      }
+    }
+  };
+
+  const industryItemVariants = {
+    hidden: {
+      opacity: 0,
+      x: -30
+    },
+    visible: {
+      opacity: 1,
+      x: 0,
+      transition: {
+        duration: 1,
+        ease: "easeOut"
+      }
+    }
+  };
+
+  const imageVariants = {
+    hidden: {
+      opacity: 0,
+      scale: 0.3
+    },
+    visible: {
+      opacity: 1,
+      scale: 1,
+      transition: {
+        duration: 1,
+        ease: "easeOut",
+        type: "spring",
+        bounce: 0.3
+      }
+    }
+  };
+
+  const textVariants = {
+    hidden: {
+      opacity: 0,
+      y: 20
+    },
+    visible: {
+      opacity: 1,
+      y: 0,
+      transition: {
+        duration: 1,
+        ease: "easeOut",
+        delay: 0.2
+      }
+    }
+  };
+
   const industries = [
     {
       title: "Real Estate",
@@ -34,44 +110,85 @@ const Services = () => {
   ];
 
   return (
-    <section id="all-services" className="py-16 relative">
+    <motion.section
+      id="all-services"
+      className="py-16 relative"
+      initial="hidden"
+      whileInView="visible"
+      viewport={{ once: true, amount: 0.2 }}
+      variants={containerVariants}
+    >
       <div className="container mx-auto px-4 sm:px-6 lg:px-8 relative z-20">
-        
+
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-16 items-start">
-          
+
           {/* Left Side - Title and Description */}
-          <div className="lg:sticky lg:top-32">
-            <h2 className="text-4xl sm:text-5xl md:text-6xl font-bold text-white mb-8 leading-tight">
+          <motion.div
+            className="lg:sticky lg:top-32"
+            variants={leftContentVariants}
+          >
+            <motion.h2
+              className="text-4xl sm:text-5xl md:text-6xl font-bold text-white mb-8 leading-tight"
+              variants={leftContentVariants}
+            >
               Solutions for<br />
               Every Industry
-            </h2>
-            <p className="text-gray-300 text-lg leading-relaxed mb-8">
+            </motion.h2>
+            <motion.p
+              className="text-gray-300 text-lg leading-relaxed mb-8"
+              variants={leftContentVariants}
+            >
               SoftXSolutions designs and ships web, mobile, and AI systems that launch fast, scale safely, and drive real revenue. Pick your industry to see what we can deploy in weeks.
-            </p>
-            <button className="bg-softx-orange text-white px-8 py-4 rounded-full font-semibold text-lg hover:bg-softx-orange-light hover:scale-105 transition-all duration-300">
+            </motion.p>
+            <motion.button
+              className="bg-softx-orange text-white px-8 py-4 rounded-full font-semibold text-lg hover:bg-softx-orange-light hover:scale-105 transition-all duration-300"
+              variants={leftContentVariants}
+              whileHover={{ scale: 1.05 }}
+              whileTap={{ scale: 0.95 }}
+            >
               Book a Free Strategy Call
-            </button>
-          </div>
+            </motion.button>
+          </motion.div>
 
           {/* Right Side - Industry Solutions */}
-          <div className="space-y-8">
+          <motion.div
+            className="space-y-8"
+            variants={containerVariants}
+          >
             {industries.map((industry, index) => (
-              <div key={index} className="group">
+              <motion.div
+                key={index}
+                className="group"
+                variants={industryItemVariants}
+                custom={index}
+              >
                 {/* Industry Item */}
                 <div className="grid grid-cols-1 md:grid-cols-3 gap-6 items-center pb-8">
-                  
+
                   {/* Text Content */}
-                  <div className="md:col-span-2">
-                    <h3 className="text-3xl lg:text-4xl font-bold text-white mb-4">
+                  <motion.div
+                    className="md:col-span-2"
+                    variants={textVariants}
+                  >
+                    <motion.h3
+                      className="text-3xl lg:text-4xl font-bold text-white mb-4"
+                      variants={textVariants}
+                    >
                       {industry.title}
-                    </h3>
-                    <p className="text-gray-300 text-sm leading-relaxed">
+                    </motion.h3>
+                    <motion.p
+                      className="text-gray-300 text-sm leading-relaxed"
+                      variants={textVariants}
+                    >
                       {industry.description}
-                    </p>
-                  </div>
+                    </motion.p>
+                  </motion.div>
 
                   {/* Image */}
-                  <div className="md:col-span-1">
+                  <motion.div
+                    className="md:col-span-1"
+                    variants={imageVariants}
+                  >
                     <div className="w-full h-32 rounded-2xl overflow-hidden">
                       <img
                         src={industry.image}
@@ -89,20 +206,26 @@ const Services = () => {
                         placeholderText={industry.imagePlaceholder}
                       />
                     </div>
-                  </div>
+                  </motion.div>
                 </div>
 
                 {/* Separator Line */}
                 {index < industries.length - 1 && (
-                  <div className="border-b border-gray-600 opacity-50"></div>
+                  <motion.div
+                    className="border-b border-gray-600 opacity-50"
+                    initial={{ scaleX: 0 }}
+                    whileInView={{ scaleX: 1 }}
+                    viewport={{ once: true }}
+                    transition={{ duration: 0.8, ease: "easeOut", delay: 0.5 }}
+                  />
                 )}
-              </div>
+              </motion.div>
             ))}
-          </div>
+          </motion.div>
 
         </div>
       </div>
-    </section>
+    </motion.section>
   );
 };
 

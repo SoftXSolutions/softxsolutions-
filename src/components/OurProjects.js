@@ -1,30 +1,303 @@
+import { motion, useSpring } from 'framer-motion';
+import { useEffect, useRef, useState } from 'react';
 import ImagePlaceholder from './ImagePlaceholder';
 import wcuImage from '../assets/images/wcu.png';
 import wcu1Image from '../assets/images/wcu1.png';
 import outprojectp1Image from '../assets/images/ourprojectp1.png';
 import wcumImage from '../assets/images/wcum.png';
 
+const AnimatedNumber = ({ value, delay = 0, suffix = "" }) => {
+  const ref = useRef(null);
+  const spring = useSpring(0, {
+    mass: 1.2,
+    stiffness: 60,
+    damping: 25,
+    restDelta: 0.001
+  });
+
+  useEffect(() => {
+    const timer = setTimeout(() => {
+      spring.set(value);
+    }, delay);
+
+    return () => clearTimeout(timer);
+  }, [value, spring, delay]);
+
+  useEffect(() => {
+    const unsub = spring.on('change', (latest) => {
+      if (ref.current) {
+        ref.current.textContent = String(Math.round(latest)) + suffix;
+      }
+    });
+    return () => unsub();
+  }, [spring, suffix]);
+
+  return <span ref={ref}>0{suffix}</span>;
+};
+
 const OurProjects = () => {
+  // Ultra-smooth animation variants
+  const containerVariants = {
+    hidden: { opacity: 0 },
+    visible: {
+      opacity: 1,
+      transition: {
+        staggerChildren: 0.2,
+        delayChildren: 0.1,
+        ease: "easeInOut"
+      }
+    }
+  };
+
+  const fadeInUp = {
+    hidden: {
+      y: 80,
+      opacity: 0,
+      scale: 0.9
+    },
+    visible: {
+      y: 0,
+      opacity: 1,
+      scale: 1,
+      transition: {
+        duration: 1.6,
+        ease: [0.25, 0.46, 0.45, 0.94]
+      }
+    }
+  };
+
+  const scaleIn = {
+    hidden: {
+      scale: 0.8,
+      opacity: 0,
+      y: 40
+    },
+    visible: {
+      scale: 1,
+      opacity: 1,
+      y: 0,
+      transition: {
+        duration: 1.5,
+        ease: [0.25, 0.46, 0.45, 0.94],
+        type: "spring",
+        bounce: 0.15
+      }
+    }
+  };
+
+  const slideFromLeft = {
+    hidden: {
+      x: -100,
+      opacity: 0,
+      scale: 0.9
+    },
+    visible: {
+      x: 0,
+      opacity: 1,
+      scale: 1,
+      transition: {
+        duration: 1.7,
+        ease: [0.25, 0.46, 0.45, 0.94]
+      }
+    }
+  };
+
+  const slideFromRight = {
+    hidden: {
+      x: 100,
+      opacity: 0,
+      scale: 0.9
+    },
+    visible: {
+      x: 0,
+      opacity: 1,
+      scale: 1,
+      transition: {
+        duration: 1.7,
+        ease: [0.25, 0.46, 0.45, 0.94]
+      }
+    }
+  };
+
+  // Interactive tabs for 'Building With the Best Tools'
+  const [buildTab, setBuildTab] = useState('Web Platform');
+  const [buildVisible, setBuildVisible] = useState(true);
+
+  const buildContent = {
+    'Web Platform': [
+      { title: 'Front End', items: ['Graphql','React Hook','ANT Design','Material UI','TypeScript','NEXT.JS','REACT.JS','Rest API'] },
+      { title: 'Back End', items: ['NODE. JS','PHP','Python','Java'] }
+    ],
+    'AI Platforms': [
+      { title: 'Environments', items: ['Python','N8n','Make','Colab'] },
+      { title: 'Services', items: ['Model Training','Calling Agents','Custom Workflows','Custom Chatbots'] }
+    ],
+    'Mobile Apps': [
+      { title: 'Mobile Apps', items: ['Konlin','GO','Flutter','Awift'] }
+    ],
+    'Database': [
+      { title: 'Database', items: ['Mysql','Postgresl','Mongodb','Solr'] }
+    ]
+  };
+
+  useEffect(() => {
+    setBuildVisible(false);
+    const t = setTimeout(() => setBuildVisible(true), 40);
+    return () => clearTimeout(t);
+  }, [buildTab]);
+
   return (
-    <section className="py-16 relative">
+    <motion.section
+      className="py-16 relative"
+      initial="hidden"
+      whileInView="visible"
+      viewport={{ once: true, amount: 0.2 }}
+      variants={containerVariants}
+    >
       <div className="container mx-auto px-4 sm:px-6 lg:px-8 relative z-20">
 
         {/* Section Header */}
-        <div className="text-center mb-16">
-          <h2 className="text-4xl sm:text-5xl md:text-6xl font-bold text-white mb-12">
+        <motion.div
+          className="text-center mb-16"
+          variants={fadeInUp}
+        >
+          <motion.h2
+            className="text-4xl sm:text-5xl md:text-6xl font-bold text-white mb-12"
+            variants={fadeInUp}
+          >
             Our Projects
-          </h2>
-        </div>
+          </motion.h2>
+        </motion.div>
+
+        {/* Services Overview - Alternating Cards (below Our Approach) */}
+        <motion.div
+          className="space-y-6 mb-20"
+          initial="hidden"
+          whileInView="visible"
+          viewport={{ once: true, amount: 0.25 }}
+          variants={containerVariants}
+        >
+          {/* 1. UI/UX Design */}
+          <motion.div
+            variants={slideFromLeft}
+            className="border border-white/40 rounded-xl p-6 lg:p-8 bg-transparent"
+          >
+            <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 items-start">
+              <div>
+                <h4 className="text-2xl lg:text-3xl font-bold text-white mb-3">UI/UX Design</h4>
+                <p className="text-gray-300 leading-relaxed">
+                  SoftXSolutions begins with deep user and stakeholder insights, then turns insights into
+                  wireframes and rapid prototypes. We refine flows and visual systems through sprints to the
+                  final design that drives clarity and conversion.
+                </p>
+              </div>
+              <div className="lg:border-l lg:border-white/20 lg:pl-8">
+                <ul className="text-white/85 space-y-3 list-disc list-inside">
+                  <li>User Centric Research</li>
+                  <li>Wireframing & Prototyping</li>
+                  <li>Visual Design & Branding</li>
+                </ul>
+              </div>
+            </div>
+          </motion.div>
+
+          {/* 2. Web Development */}
+          <motion.div
+            variants={slideFromRight}
+            className="border border-white/40 rounded-xl p-6 lg:p-8 bg-transparent"
+          >
+            <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 items-start">
+              <div>
+                <h4 className="text-2xl lg:text-3xl font-bold text-white mb-3">Web Development</h4>
+                <p className="text-gray-300 leading-relaxed">
+                  From pixel-perfect front ends to secure Next/Node back ends, we ship accessible, SEO-ready
+                  websites with analytics, payments, and CMS integrations.
+                </p>
+              </div>
+              <div className="lg:border-l lg:border-white/20 lg:pl-8">
+                <ul className="text-white/85 space-y-3 list-disc list-inside">
+                  <li>User Centric Research</li>
+                  <li>Platform Selection Stack</li>
+                  <li>Agile Development Process</li>
+                </ul>
+              </div>
+            </div>
+          </motion.div>
+
+          {/* 3. Mobile Development */}
+          <motion.div
+            variants={slideFromLeft}
+            className="border border-white/40 rounded-xl p-6 lg:p-8 bg-transparent"
+          >
+            <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 items-start">
+              <div>
+                <h4 className="text-2xl lg:text-3xl font-bold text-white mb-3">Mobile Development</h4>
+                <p className="text-gray-300 leading-relaxed">
+                  We craft Android and iOS apps with clean architectures, native-like UX, offline-first flows,
+                  and rock-solid CI/CD pipelines.
+                </p>
+              </div>
+              <div className="lg:border-l lg:border-white/20 lg:pl-8">
+                <ul className="text-white/85 space-y-3 list-disc list-inside">
+                  <li>Comprehensive Roadmaps</li>
+                  <li>Scalable Infrastructure Design</li>
+                  <li>Security and Compliance</li>
+                </ul>
+              </div>
+            </div>
+          </motion.div>
+
+          {/* 4. Cloud Services */}
+          <motion.div
+            variants={slideFromRight}
+            className="border border-white/40 rounded-xl p-6 lg:p-8 bg-transparent"
+          >
+            <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 items-start">
+              <div>
+                <h4 className="text-2xl lg:text-3xl font-bold text-white mb-3">Cloud Services</h4>
+                <p className="text-gray-300 leading-relaxed">
+                  Architecture on AWS for resilience, performance, and cost control. Automation, monitoring,
+                  and best-practice security keep you always-on.
+                </p>
+              </div>
+              <div className="lg:border-l lg:border-white/20 lg:pl-8">
+                <ul className="text-white/85 space-y-3 list-disc list-inside">
+                  <li>Comprehensive Cloud Strategy</li>
+                  <li>Observability & Monitoring</li>
+                  <li>Incident Response & Reliability</li>
+                </ul>
+              </div>
+            </div>
+          </motion.div>
+        </motion.div>
+        
+        
 
         {/* Projects Grid */}
-        <div className="relative flex flex-col lg:flex-row justify-center items-end gap-8 lg:gap-12 mb-12">
+        <motion.div
+          className="relative flex flex-col lg:flex-row justify-center items-end gap-8 lg:gap-12 mb-12"
+          variants={containerVariants}
+        >
 
           {/* Project 1 - Left (INBV TV) */}
-          <div className="relative">
-            <img
+          <motion.div
+            className="relative"
+            variants={slideFromLeft}
+            whileHover={{
+              y: -15,
+              scale: 1.05,
+              transition: { duration: 0.4, ease: "easeInOut" }
+            }}
+          >
+            <motion.img
               src={wcuImage}
               alt="INBV TV Project"
               className="w-64 h-48 lg:w-80 lg:h-60 rounded-2xl object-cover shadow-2xl"
+              variants={scaleIn}
+              whileHover={{
+                scale: 1.02,
+                transition: { duration: 0.3, ease: "easeInOut" }
+              }}
               onError={(e) => {
                 e.target.style.display = 'none';
                 e.target.nextSibling.style.display = 'block';
@@ -51,10 +324,18 @@ const OurProjects = () => {
             <h3 className="text-2xl lg:text-3xl font-bold text-white">
               INBV TV
             </h3>
-          </div>
+          </motion.div>
 
           {/* Project 2 - Center (Kallin AI) - Higher Position */}
-          <div className="relative lg:-mt-8">
+          <motion.div
+            className="relative lg:-mt-8"
+            variants={fadeInUp}
+            whileHover={{
+              y: -15,
+              scale: 1.05,
+              transition: { duration: 0.4, ease: "easeInOut" }
+            }}
+          >
             <img
               src={wcu1Image}
               alt="Kallin AI Project"
@@ -85,10 +366,18 @@ const OurProjects = () => {
             <h3 className="text-2xl lg:text-3xl font-bold text-white text-center">
               Kallin AI
             </h3>
-          </div>
+          </motion.div>
 
           {/* Project 3 - Right (IELTS Academics) */}
-          <div className="relative">
+          <motion.div
+            className="relative"
+            variants={slideFromRight}
+            whileHover={{
+              y: -15,
+              scale: 1.05,
+              transition: { duration: 0.4, ease: "easeInOut" }
+            }}
+          >
             <img
               src={outprojectp1Image}
               alt="IELTS Academics Project"
@@ -119,23 +408,101 @@ const OurProjects = () => {
             <h3 className="text-2xl lg:text-3xl font-bold text-white">
               IELTS Academics
             </h3>
-          </div>
-        </div>
+          </motion.div>
+        </motion.div>
 
         {/* Call to Action Button */}
-        <div className="text-center mb-20">
-          <button className="bg-softx-orange text-white px-8 py-4 rounded-full font-semibold text-lg hover:bg-softx-orange-light hover:scale-105 transition-all duration-300 shadow-lg">
+        <motion.div
+          className="text-center mb-20"
+          variants={fadeInUp}
+        >
+          <motion.button
+            className="bg-softx-orange text-white px-8 py-4 rounded-full font-semibold text-lg shadow-lg"
+            whileHover={{
+              scale: 1.05,
+              boxShadow: "0 8px 25px rgba(255, 107, 0, 0.4)",
+              transition: { duration: 0.3, ease: "easeInOut" }
+            }}
+            whileTap={{
+              scale: 0.98,
+              transition: { duration: 0.1 }
+            }}
+          >
             Lets Build Your Application
-          </button>
-        </div>
+          </motion.button>
+        </motion.div>
+
+        <motion.div
+          className="mb-20"
+          initial="hidden"
+          whileInView="visible"
+          viewport={{ once: true, amount: 0.2 }}
+          variants={containerVariants}
+        >
+          <div className="grid grid-cols-1 lg:grid-cols-3 gap-10 items-start">
+            <motion.div className="col-span-1" variants={slideFromLeft}>
+              <h3 className="text-4xl sm:text-5xl font-bold text-white leading-tight">
+                Building With
+                <br />
+                the Best Tools
+              </h3>
+              <div className="mt-8 space-y-4 max-w-xs">
+                {['Web Platform','AI Platforms','Mobile Apps','Database'].map(tab => (
+                  <button
+                    key={tab}
+                    onClick={() => setBuildTab(tab)}
+                    className={`w-full text-left px-6 py-3 rounded-full font-semibold transition ${buildTab===tab ? 'bg-softx-orange text-white' : 'border border-white/20 text-white/80 hover:bg-white/5'}`}
+                  >
+                    {tab}
+                  </button>
+                ))}
+              </div>
+            </motion.div>
+
+            <motion.div className="col-span-1 lg:col-span-2" variants={slideFromRight}>
+              <div className={`border border-white/20 rounded-2xl p-6 lg:p-8 transition-all duration-500 ${buildVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-2'}`}>
+                <motion.div
+                  key={buildTab}
+                  className={`grid grid-cols-1 ${buildContent[buildTab].length > 1 ? 'lg:grid-cols-2' : 'lg:grid-cols-1'} gap-8`}
+                  initial="hidden"
+                  animate="visible"
+                  variants={containerVariants}
+                >
+                  {buildContent[buildTab].map(col => (
+                    <div key={col.title}>
+                      <h4 className="text-2xl font-semibold text-white mb-4">{col.title}</h4>
+                      <div className="space-y-4">
+                        {col.items.map((label, i) => (
+                          <motion.div key={label} variants={fadeInUp} className="flex items-center gap-4 border border-white/20 rounded-xl px-4 py-3">
+                            <span className="w-10 h-10 rounded-full border border-white/30 flex items-center justify-center text-white/90 text-sm">{String(i+1).padStart(2,'0')}</span>
+                            <span className="text-white/90 font-medium">{label}</span>
+                          </motion.div>
+                        ))}
+                      </div>
+                    </div>
+                  ))}
+                </motion.div>
+              </div>
+            </motion.div>
+          </div>
+        </motion.div>
 
         {/* Our Approach Section */}
-        <div className="mb-20">
-          <div className="border border-gray-600 rounded-3xl p-8 lg:p-12 bg-black/30 backdrop-blur-sm">
+        <motion.div
+          className="mb-20"
+          variants={scaleIn}
+        >
+          <motion.div
+            className="border border-white/40 rounded-xl p-8 lg:p-12 bg-transparent"
+            whileHover={{
+              scale: 1.01,
+              transition: { duration: 0.4, ease: "easeInOut" }
+            }}
+          >
             <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
 
               {/* Left Content */}
-              <div>
+              <motion.div variants={slideFromLeft}>
                 <h3 className="text-4xl lg:text-5xl font-bold text-white mb-6">
                   Our Approach
                 </h3>
@@ -144,13 +511,27 @@ const OurProjects = () => {
                   SoftXSolutions builds, ships & grows with
                   24/7 support.
                 </p>
-                <button className="bg-softx-orange text-white px-6 py-3 rounded-full font-semibold hover:bg-softx-orange-light transition-all duration-300">
+                <motion.button
+                  className="bg-softx-orange text-white px-6 py-3 rounded-full font-semibold"
+                  whileHover={{
+                    scale: 1.05,
+                    boxShadow: "0 8px 25px rgba(255, 107, 0, 0.4)",
+                    transition: { duration: 0.3, ease: "easeInOut" }
+                  }}
+                  whileTap={{
+                    scale: 0.98,
+                    transition: { duration: 0.1 }
+                  }}
+                >
                   Discover Now
-                </button>
-              </div>
+                </motion.button>
+              </motion.div>
 
               {/* Right Content - Mobile Image and Stats */}
-              <div className="relative flex justify-center">
+              <motion.div
+                className="relative flex justify-center"
+                variants={slideFromRight}
+              >
                 <div className="relative">
                   <img
                     src={wcumImage}
@@ -169,239 +550,31 @@ const OurProjects = () => {
                   />
 
                   {/* Stats Card Overlay */}
-                  <div className="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 bg-black/70 backdrop-blur-sm border border-gray-600 rounded-2xl p-6 text-center">
-                    <div className="text-4xl font-bold text-white mb-2">50+</div>
+                  <motion.div
+                    className="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 bg-black/70 backdrop-blur-sm rounded-2xl p-6 text-center"
+                    initial={{ scale: 0 }}
+                    whileInView={{ scale: 1 }}
+                    viewport={{ once: true }}
+                    transition={{
+                      delay: 1.0,
+                      duration: 0.8,
+                      type: "spring",
+                      bounce: 0.4
+                    }}
+                  >
+                    <div className="text-4xl font-bold text-white mb-2">
+                      <AnimatedNumber value={50} delay={1200} suffix="+" />
+                    </div>
                     <div className="text-gray-300 text-sm">Success Projects</div>
-                  </div>
+                  </motion.div>
                 </div>
-              </div>
+              </motion.div>
             </div>
-          </div>
-        </div>
-
-        {/* Building With the Best Tools Section */}
-        <div className="mb-16">
-          <h3 className="text-4xl lg:text-5xl font-bold text-white mb-12">
-            Building With<br />the Best Tools
-          </h3>
-
-          <div className="grid grid-cols-1 lg:grid-cols-4 gap-8">
-
-            {/* Left Column - Categories */}
-            <div className="space-y-4">
-              <button className="w-full bg-softx-orange text-white px-6 py-3 rounded-full font-semibold text-left">
-                Web Platform
-              </button>
-              <button className="w-full bg-transparent border border-gray-600 text-white px-6 py-3 rounded-full font-semibold text-left hover:border-softx-orange transition-colors">
-                AI Platforms
-              </button>
-              <button className="w-full bg-transparent border border-gray-600 text-white px-6 py-3 rounded-full font-semibold text-left hover:border-softx-orange transition-colors">
-                Mobile Apps
-              </button>
-              <button className="w-full bg-transparent border border-gray-600 text-white px-6 py-3 rounded-full font-semibold text-left hover:border-softx-orange transition-colors">
-                Database
-              </button>
-            </div>
-
-            {/* Right Columns - Technologies */}
-            <div className="lg:col-span-3">
-              <div className="border border-gray-600 rounded-2xl p-8 bg-black/30 backdrop-blur-sm">
-                <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
-
-                  {/* Front End */}
-                  <div>
-                    <h4 className="text-2xl font-bold text-white mb-6">Front End</h4>
-                    <div className="grid grid-cols-2 gap-4">
-                      <div className="bg-gray-800 border border-gray-600 rounded-lg p-4 text-center">
-                        <span className="text-gray-400 text-sm">01</span>
-                        <div className="text-white font-semibold">Graphql</div>
-                      </div>
-                      <div className="bg-gray-800 border border-gray-600 rounded-lg p-4 text-center">
-                        <span className="text-gray-400 text-sm">05</span>
-                        <div className="text-white font-semibold">TypeScript</div>
-                      </div>
-                      <div className="bg-gray-800 border border-gray-600 rounded-lg p-4 text-center">
-                        <span className="text-gray-400 text-sm">02</span>
-                        <div className="text-white font-semibold">React Hook</div>
-                      </div>
-                      <div className="bg-gray-800 border border-gray-600 rounded-lg p-4 text-center">
-                        <span className="text-gray-400 text-sm">06</span>
-                        <div className="text-white font-semibold">NEXT.JS</div>
-                      </div>
-                      <div className="bg-gray-800 border border-gray-600 rounded-lg p-4 text-center">
-                        <span className="text-gray-400 text-sm">03</span>
-                        <div className="text-white font-semibold">ANT Design</div>
-                      </div>
-                      <div className="bg-gray-800 border border-gray-600 rounded-lg p-4 text-center">
-                        <span className="text-gray-400 text-sm">07</span>
-                        <div className="text-white font-semibold">REACT.JS</div>
-                      </div>
-                      <div className="bg-gray-800 border border-gray-600 rounded-lg p-4 text-center">
-                        <span className="text-gray-400 text-sm">04</span>
-                        <div className="text-white font-semibold">Material UI</div>
-                      </div>
-                      <div className="bg-gray-800 border border-gray-600 rounded-lg p-4 text-center">
-                        <span className="text-gray-400 text-sm">08</span>
-                        <div className="text-white font-semibold">Rest API</div>
-                      </div>
-                    </div>
-                  </div>
-
-                  {/* Back End */}
-                  <div>
-                    <h4 className="text-2xl font-bold text-white mb-6">Back End</h4>
-                    <div className="grid grid-cols-2 gap-4">
-                      <div className="bg-gray-800 border border-gray-600 rounded-lg p-4 text-center">
-                        <span className="text-gray-400 text-sm">01</span>
-                        <div className="text-white font-semibold">NODE.JS</div>
-                      </div>
-                      <div className="bg-gray-800 border border-gray-600 rounded-lg p-4 text-center">
-                        <span className="text-gray-400 text-sm">02</span>
-                        <div className="text-white font-semibold">PHP</div>
-                      </div>
-                      <div className="bg-gray-800 border border-gray-600 rounded-lg p-4 text-center">
-                        <span className="text-gray-400 text-sm">03</span>
-                        <div className="text-white font-semibold">Python</div>
-                      </div>
-                      <div className="bg-gray-800 border border-gray-600 rounded-lg p-4 text-center">
-                        <span className="text-gray-400 text-sm">04</span>
-                        <div className="text-white font-semibold">Java</div>
-                      </div>
-                    </div>
-                  </div>
-                </div>
-              </div>
-            </div>
-          </div>
-        </div>
-
-        {/* Services Section */}
-        <div className="mt-20 max-w-6xl mx-auto space-y-8">
-
-          {/* UI/UX Design Card */}
-          <div className="border border-gray-600 rounded-3xl p-8 lg:p-12 bg-black/30 backdrop-blur-sm">
-            <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center relative">
-              <div>
-                <h3 className="text-3xl lg:text-4xl font-bold text-white mb-6">
-                  UI/UX Design
-                </h3>
-                <p className="text-gray-300 text-sm leading-relaxed mb-6">
-                  SoftXSolutions begins with deep user and stakeholder research, then turns insights into wireframes and rapid prototypes. We refine flows and visual systems through testing, so the final design looks on-brand, feels effortless, and converts from day one.
-                </p>
-              </div>
-              {/* Vertical Divider Line */}
-              <div className="hidden lg:block absolute left-1/2 top-0 bottom-0 w-px bg-gray-600 transform -translate-x-1/2"></div>
-              <div className="space-y-4">
-                <div className="flex items-center gap-3">
-                  <div className="w-2 h-2 bg-softx-orange rounded-full"></div>
-                  <span className="text-gray-300 text-sm">User Centric Research</span>
-                </div>
-                <div className="flex items-center gap-3">
-                  <div className="w-2 h-2 bg-softx-orange rounded-full"></div>
-                  <span className="text-gray-300 text-sm">Wireframing & Prototyping</span>
-                </div>
-                <div className="flex items-center gap-3">
-                  <div className="w-2 h-2 bg-softx-orange rounded-full"></div>
-                  <span className="text-gray-300 text-sm">Visual Design & Branding</span>
-                </div>
-              </div>
-            </div>
-          </div>
-
-          {/* Web Development Card */}
-          <div className="border border-gray-600 rounded-3xl p-8 lg:p-12 bg-black/30 backdrop-blur-sm">
-            <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center relative">
-              <div className="space-y-4">
-                <div className="flex items-center gap-3">
-                  <div className="w-2 h-2 bg-softx-orange rounded-full"></div>
-                  <span className="text-gray-300 text-sm">Understanding Client Objectives</span>
-                </div>
-                <div className="flex items-center gap-3">
-                  <div className="w-2 h-2 bg-softx-orange rounded-full"></div>
-                  <span className="text-gray-300 text-sm">Strategic Planning</span>
-                </div>
-                <div className="flex items-center gap-3">
-                  <div className="w-2 h-2 bg-softx-orange rounded-full"></div>
-                  <span className="text-gray-300 text-sm">User-Centric Design</span>
-                </div>
-              </div>
-              {/* Vertical Divider Line */}
-              <div className="hidden lg:block absolute left-1/2 top-0 bottom-0 w-px bg-gray-600 transform -translate-x-1/2"></div>
-              <div>
-                <h3 className="text-3xl lg:text-4xl font-bold text-white mb-6">
-                  Web Development
-                </h3>
-                <p className="text-gray-300 text-sm leading-relaxed mb-6">
-                  From pixel-perfect front ends to secure Python/Node back ends, we ship blazing-fast, SEO-ready websites that scale. Accessibility, analytics, and CI/CD are baked in plus smooth integrations with Stripe, Twilio, CRMs, and your existing tools.
-                </p>
-              </div>
-            </div>
-          </div>
-
-          {/* Mobile Development Card */}
-          <div className="border border-gray-600 rounded-3xl p-8 lg:p-12 bg-black/30 backdrop-blur-sm">
-            <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center relative">
-              <div>
-                <h3 className="text-3xl lg:text-4xl font-bold text-white mb-6">
-                  Mobile Development
-                </h3>
-                <p className="text-gray-300 text-sm leading-relaxed mb-6">
-                  We craft Android and iOS apps with clean architecture and addictive UX. Offline-first, push notifications, and real-time APIs come standard while analytics, A/B testing, and store submissions ensure your app launches fast and keeps improving.
-                </p>
-              </div>
-              {/* Vertical Divider Line */}
-              <div className="hidden lg:block absolute left-1/2 top-0 bottom-0 w-px bg-gray-600 transform -translate-x-1/2"></div>
-              <div className="space-y-4">
-                <div className="flex items-center gap-3">
-                  <div className="w-2 h-2 bg-softx-orange rounded-full"></div>
-                  <span className="text-gray-300 text-sm">User Centric Research</span>
-                </div>
-                <div className="flex items-center gap-3">
-                  <div className="w-2 h-2 bg-softx-orange rounded-full"></div>
-                  <span className="text-gray-300 text-sm">Platform Selection Stack</span>
-                </div>
-                <div className="flex items-center gap-3">
-                  <div className="w-2 h-2 bg-softx-orange rounded-full"></div>
-                  <span className="text-gray-300 text-sm">Agile Development Process</span>
-                </div>
-              </div>
-            </div>
-          </div>
-
-          {/* Cloud Services Card */}
-          <div className="border border-gray-600 rounded-3xl p-8 lg:p-12 bg-black/30 backdrop-blur-sm">
-            <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center relative">
-              <div className="space-y-4">
-                <div className="flex items-center gap-3">
-                  <div className="w-2 h-2 bg-softx-orange rounded-full"></div>
-                  <span className="text-gray-300 text-sm">Comprehensive Cloud Strategy</span>
-                </div>
-                <div className="flex items-center gap-3">
-                  <div className="w-2 h-2 bg-softx-orange rounded-full"></div>
-                  <span className="text-gray-300 text-sm">Scalable Infrastructure Design</span>
-                </div>
-                <div className="flex items-center gap-3">
-                  <div className="w-2 h-2 bg-softx-orange rounded-full"></div>
-                  <span className="text-gray-300 text-sm">Security and Compliance</span>
-                </div>
-              </div>
-              {/* Vertical Divider Line */}
-              <div className="hidden lg:block absolute left-1/2 top-0 bottom-0 w-px bg-gray-600 transform -translate-x-1/2"></div>
-              <div>
-                <h3 className="text-3xl lg:text-4xl font-bold text-white mb-6">
-                  Cloud Services
-                </h3>
-                <p className="text-gray-300 text-sm leading-relaxed mb-6">
-                  Architected on AWS for resilience, performance, and cost control. We define a cloud strategy, design scalable infrastructure, and enforce security/compliance then operate it with monitoring, backups, and incident response so you stay always-on.
-                </p>
-              </div>
-            </div>
-          </div>
-
-        </div>
+          </motion.div>
+        </motion.div>
 
       </div>
-    </section>
+    </motion.section>
   );
 };
 

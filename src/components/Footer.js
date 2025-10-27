@@ -13,7 +13,7 @@ const Footer = () => {
   };
 
   return (
-    <footer className="relative pt-16 pb-8 border-t border-white/10">
+    <footer className="relative pt-16 pb-8">
       <div className="container mx-auto px-4 sm:px-6 lg:px-8 relative z-20">
 
         {/* Main Footer Content */}
@@ -161,7 +161,7 @@ const Footer = () => {
         </div>
 
         {/* Bottom Section */}
-        <div className="border-t border-white/20 pt-6">
+        <div className="pt-6">
           <div className="flex flex-col md:flex-row justify-between items-center">
             <div className="text-gray-300 text-sm mb-4 md:mb-0">
               All rights reserved

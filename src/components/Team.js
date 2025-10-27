@@ -1,29 +1,176 @@
+import { motion, useSpring } from 'framer-motion';
+import { useEffect, useRef } from 'react';
 import ImagePlaceholder from './ImagePlaceholder';
 import person1Image from '../assets/images/person1.png';
 import person2Image from '../assets/images/p2.png';
 import person3Image from '../assets/images/p3.png';
 import mosImage from '../assets/images/mos.png';
 
+const AnimatedNumber = ({ value, delay = 0, suffix = "" }) => {
+  const ref = useRef(null);
+  const spring = useSpring(0, { 
+    mass: 1.2, 
+    stiffness: 60, 
+    damping: 25,
+    restDelta: 0.001
+  });
+  
+  useEffect(() => {
+    const timer = setTimeout(() => {
+      spring.set(value);
+    }, delay);
+    
+    return () => clearTimeout(timer);
+  }, [value, spring, delay]);
+  
+  useEffect(() => {
+    const unsub = spring.on('change', (latest) => {
+      if (ref.current) {
+        ref.current.textContent = String(Math.round(latest)) + suffix;
+      }
+    });
+    return () => unsub();
+  }, [spring, suffix]);
+  
+  return <span ref={ref}>0{suffix}</span>;
+};
+
 const Team = () => {
+  // Ultra-smooth animation variants
+  const containerVariants = {
+    hidden: { opacity: 0 },
+    visible: {
+      opacity: 1,
+      transition: {
+        staggerChildren: 0.15,
+        delayChildren: 0.1,
+        ease: "easeInOut"
+      }
+    }
+  };
+
+  const fadeInUp = {
+    hidden: {
+      y: 60,
+      opacity: 0,
+      scale: 0.95
+    },
+    visible: {
+      y: 0,
+      opacity: 1,
+      scale: 1,
+      transition: {
+        duration: 1.5,
+        ease: [0.25, 0.46, 0.45, 0.94]
+      }
+    }
+  };
+
+  const slideFromLeft = {
+    hidden: {
+      x: -80,
+      opacity: 0,
+      scale: 0.95
+    },
+    visible: {
+      x: 0,
+      opacity: 1,
+      scale: 1,
+      transition: {
+        duration: 1.6,
+        ease: [0.25, 0.46, 0.45, 0.94]
+      }
+    }
+  };
+
+  const slideFromRight = {
+    hidden: {
+      x: 80,
+      opacity: 0,
+      scale: 0.95
+    },
+    visible: {
+      x: 0,
+      opacity: 1,
+      scale: 1,
+      transition: {
+        duration: 1.6,
+        ease: [0.25, 0.46, 0.45, 0.94]
+      }
+    }
+  };
+
+  const scaleIn = {
+    hidden: {
+      scale: 0.7,
+      opacity: 0,
+      y: 30
+    },
+    visible: {
+      scale: 1,
+      opacity: 1,
+      y: 0,
+      transition: {
+        duration: 1.4,
+        ease: [0.25, 0.46, 0.45, 0.94],
+        type: "spring",
+        bounce: 0.2
+      }
+    }
+  };
+
+  const cardVariants = {
+    hidden: {
+      y: 40,
+      opacity: 0,
+      scale: 0.9
+    },
+    visible: {
+      y: 0,
+      opacity: 1,
+      scale: 1,
+      transition: {
+        duration: 1.3,
+        ease: [0.25, 0.46, 0.45, 0.94]
+      }
+    }
+  };
+
   return (
-    <section className="py-16 relative">
-      {/* Subtle gradient overlay */}
-      <div className="absolute inset-0 bg-gradient-to-t from-softx-orange/15 via-transparent to-transparent pointer-events-none"></div>
+    <motion.section
+      className="py-16 relative"
+      initial="hidden"
+      whileInView="visible"
+      viewport={{ once: true, amount: 0.2 }}
+      variants={containerVariants}
+    >
       <div className="container mx-auto px-4 sm:px-6 lg:px-8 relative z-20">
-        
+
         {/* Section Header */}
-        <div className="text-center mb-16">
-          <h2 className="text-4xl sm:text-5xl md:text-6xl font-bold text-white mb-12">
+        <motion.div
+          className="text-center mb-16"
+          variants={fadeInUp}
+        >
+          <motion.h2
+            className="text-4xl sm:text-5xl md:text-6xl font-bold text-white mb-12"
+            variants={fadeInUp}
+          >
             What Our Clients Say
-          </h2>
-        </div>
+          </motion.h2>
+        </motion.div>
 
         {/* Stats and Testimonials Container */}
-        <div className="border border-gray-600 rounded-3xl p-8 lg:p-12 bg-black/30 backdrop-blur-sm mb-12">
+        <motion.div
+          className="p-8 lg:p-12 bg-transparent mb-12 border border-white/40 rounded-xl"
+          variants={scaleIn}
+        >
           <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center mb-12">
-            
+
             {/* Left Side - Stats */}
-            <div className="space-y-6">
+            <motion.div
+              className="space-y-6"
+              variants={slideFromLeft}
+            >
               <div className="space-y-2">
                 <div className="flex items-center gap-2">
                   <div className="w-2 h-2 bg-white rounded-full"></div>
@@ -42,31 +189,71 @@ const Team = () => {
                   <span className="text-gray-300 text-sm">100% Success Score</span>
                 </div>
               </div>
-              
+
               <div className="mt-8">
                 <div className="text-gray-400 text-sm mb-2">Fiverr Rating</div>
-                <div className="text-6xl font-bold text-white">5</div>
+                <motion.div
+                  className="text-6xl font-bold text-white"
+                  initial={{ scale: 0 }}
+                  whileInView={{ scale: 1 }}
+                  viewport={{ once: true }}
+                  transition={{
+                    delay: 0.8,
+                    duration: 1.0,
+                    type: "spring",
+                    bounce: 0.4
+                  }}
+                >
+                  <AnimatedNumber value={5} delay={1000} />
+                </motion.div>
               </div>
-            </div>
+            </motion.div>
 
             {/* Right Side - Happy Customers */}
-            <div className="text-right">
+            <motion.div
+              className="text-right"
+              variants={slideFromRight}
+            >
               <div className="text-gray-400 text-sm mb-2">Happy Customers</div>
-              <div className="text-6xl font-bold text-white mb-4">100%</div>
+              <motion.div
+                className="text-6xl font-bold text-white mb-4"
+                initial={{ scale: 0 }}
+                whileInView={{ scale: 1 }}
+                viewport={{ once: true }}
+                transition={{
+                  delay: 0.6,
+                  duration: 1.0,
+                  type: "spring",
+                  bounce: 0.4
+                }}
+              >
+                <AnimatedNumber value={100} delay={800} suffix="%" />
+              </motion.div>
               <p className="text-gray-300 text-sm leading-relaxed">
                 At SoftXSolutions, 100% happy customers isn't just a goal—it's our promise. We ship fast, communicate clearly, and support you 24/7 until everything feels flawless.
               </p>
-            </div>
+            </motion.div>
           </div>
 
           {/* Testimonial Cards */}
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
-            
+          <motion.div
+            className="grid grid-cols-1 md:grid-cols-3 gap-6"
+            variants={containerVariants}
+          >
+
             {/* Professional Card */}
-            <div className="border border-gray-600 rounded-2xl p-6 bg-black/50 text-center">
+            <motion.div
+              className="border border-white/40 rounded-xl p-6 bg-transparent text-center"
+              variants={cardVariants}
+              whileHover={{
+                scale: 1.05,
+                y: -10,
+                transition: { duration: 0.3, ease: "easeInOut" }
+              }}
+            >
               <h3 className="text-2xl font-bold text-white mb-4">"Professional"</h3>
               <div className="text-gray-400 text-sm mb-4">Edward JR.</div>
-              <div className="w-32 h-32 mx-auto rounded-2xl overflow-hidden">
+              <div className="w-40 h-40 mx-auto rounded-xl overflow-hidden">
                 <img
                   src={person1Image}
                   alt="Edward JR"
@@ -83,15 +270,24 @@ const Team = () => {
                   placeholderText="person1.png"
                 />
               </div>
-            </div>
+            </motion.div>
 
             {/* Impressive Card - Center */}
-            <div className="bg-gradient-to-b from-softx-orange to-orange-600 rounded-2xl p-6 text-center">
-              <div className="w-32 h-32 mx-auto rounded-2xl overflow-hidden mb-4">
+            <motion.div
+              className="relative -mt-14 bg-gradient-to-b from-softx-orange to-orange-600 rounded-xl p-6 text-center border border-orange-400/20 overflow-visible"
+              variants={cardVariants}
+              whileHover={{
+                scale: 1.08,
+                y: -15,
+                boxShadow: "0 20px 40px rgba(255, 107, 0, 0.3)",
+                transition: { duration: 0.3, ease: "easeInOut" }
+              }}
+            >
+              <div className="w-48 h-48 mx-auto -mt-16 mb-2 relative z-10">
                 <img
                   src={person2Image}
                   alt="Robert Lewis"
-                  className="w-full h-full object-cover"
+                  className="w-full h-full object-contain drop-shadow-[0_8px_30px_rgba(0,0,0,0.35)]"
                   onError={(e) => {
                     e.target.style.display = 'none';
                     e.target.nextSibling.style.display = 'block';
@@ -100,19 +296,27 @@ const Team = () => {
                 <ImagePlaceholder
                   src=""
                   alt="Robert Lewis"
-                  className="hidden w-full h-full object-cover"
+                  className="hidden w-full h-full object-contain"
                   placeholderText="p2.png"
                 />
               </div>
               <h3 className="text-2xl font-bold text-white mb-4">"Impressive"</h3>
               <div className="text-white/80 text-sm">Robert Lewis</div>
-            </div>
+            </motion.div>
 
             {/* Good Quality Card */}
-            <div className="border border-gray-600 rounded-2xl p-6 bg-black/50 text-center">
+            <motion.div
+              className="border border-white/40 rounded-xl p-6 bg-transparent text-center"
+              variants={cardVariants}
+              whileHover={{
+                scale: 1.05,
+                y: -10,
+                transition: { duration: 0.3, ease: "easeInOut" }
+              }}
+            >
               <h3 className="text-2xl font-bold text-white mb-4">"Good Quality"</h3>
               <div className="text-gray-400 text-sm mb-4">Alexander L.</div>
-              <div className="w-32 h-32 mx-auto rounded-2xl overflow-hidden">
+              <div className="w-40 h-40 mx-auto rounded-xl overflow-hidden">
                 <img
                   src={person3Image}
                   alt="Alexander L"
@@ -129,16 +333,19 @@ const Team = () => {
                   placeholderText="p3.png"
                 />
               </div>
-            </div>
-          </div>
-        </div>
+            </motion.div>
+          </motion.div>
+        </motion.div>
 
         {/* Ready to Start Section */}
-        <div className="border border-gray-600 rounded-3xl p-8 lg:p-12 bg-black/30 backdrop-blur-sm">
+        <motion.div
+          className="p-8 lg:p-12 bg-transparent border border-white/40 rounded-xl"
+          variants={scaleIn}
+        >
           <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
-            
+
             {/* Left Side - Form */}
-            <div>
+            <motion.div variants={slideFromLeft}>
               <h3 className="text-4xl lg:text-5xl font-bold text-white mb-4">
                 Ready to Start<br />Your Project?
               </h3>
@@ -194,21 +401,38 @@ const Team = () => {
                   ></textarea>
                 </div>
 
-                <button
+                <motion.button
                   type="submit"
-                  className="bg-softx-orange text-white px-8 py-3 rounded-full font-semibold hover:bg-softx-orange-light transition-all duration-300"
+                  className="bg-softx-orange text-white px-8 py-3 rounded-full font-semibold"
+                  whileHover={{
+                    scale: 1.05,
+                    boxShadow: "0 8px 25px rgba(255, 107, 0, 0.4)",
+                    transition: { duration: 0.3, ease: "easeInOut" }
+                  }}
+                  whileTap={{
+                    scale: 0.98,
+                    transition: { duration: 0.1 }
+                  }}
                 >
                   Send Message
-                </button>
+                </motion.button>
               </form>
-            </div>
+            </motion.div>
 
             {/* Right Side - Image */}
-            <div className="flex justify-center">
-              <img
+            <motion.div
+              className="flex justify-center"
+              variants={slideFromRight}
+            >
+              <motion.img
                 src={mosImage}
                 alt="Ready to Start"
                 className="w-80 h-auto object-contain"
+                variants={scaleIn}
+                whileHover={{
+                  scale: 1.05,
+                  transition: { duration: 0.3, ease: "easeInOut" }
+                }}
                 onError={(e) => {
                   e.target.style.display = 'none';
                   e.target.nextSibling.style.display = 'block';
@@ -220,12 +444,12 @@ const Team = () => {
                 className="hidden w-80 h-60 rounded-2xl object-cover"
                 placeholderText="mos.png"
               />
-            </div>
+            </motion.div>
           </div>
-        </div>
+        </motion.div>
 
       </div>
-    </section>
+    </motion.section>
   );
 };
 

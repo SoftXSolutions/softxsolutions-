@@ -1,4 +1,5 @@
-import React, { useState } from 'react';
+import { useState } from 'react';
+import { motion } from 'framer-motion';
 
 const FAQ = () => {
   const [openFAQ, setOpenFAQ] = useState([0, 3]); // Open first FAQ in each column by default
@@ -39,11 +40,75 @@ const FAQ = () => {
   ];
 
   const toggleFAQ = (index) => {
-    setOpenFAQ(prev => 
-      prev.includes(index) 
+    setOpenFAQ(prev =>
+      prev.includes(index)
         ? prev.filter(i => i !== index)
         : [...prev, index]
     );
+  };
+
+  // Ultra-smooth animation variants
+  const containerVariants = {
+    hidden: { opacity: 0 },
+    visible: {
+      opacity: 1,
+      transition: {
+        staggerChildren: 0.1,
+        delayChildren: 0.1,
+        ease: "easeInOut"
+      }
+    }
+  };
+
+  const fadeInUp = {
+    hidden: {
+      y: 60,
+      opacity: 0,
+      scale: 0.95
+    },
+    visible: {
+      y: 0,
+      opacity: 1,
+      scale: 1,
+      transition: {
+        duration: 1.4,
+        ease: [0.25, 0.46, 0.45, 0.94]
+      }
+    }
+  };
+
+  const slideFromLeft = {
+    hidden: {
+      x: -60,
+      opacity: 0,
+      scale: 0.95
+    },
+    visible: {
+      x: 0,
+      opacity: 1,
+      scale: 1,
+      transition: {
+        duration: 1.5,
+        ease: [0.25, 0.46, 0.45, 0.94]
+      }
+    }
+  };
+
+  const slideFromRight = {
+    hidden: {
+      x: 60,
+      opacity: 0,
+      scale: 0.95
+    },
+    visible: {
+      x: 0,
+      opacity: 1,
+      scale: 1,
+      transition: {
+        duration: 1.5,
+        ease: [0.25, 0.46, 0.45, 0.94]
+      }
+    }
   };
 
   // Split FAQs into two columns
@@ -55,76 +120,114 @@ const FAQ = () => {
       {faqList.map((faq, index) => {
         const actualIndex = startIndex + index * 2;
         const isOpen = openFAQ.includes(actualIndex);
-        
+
         return (
-          <div key={actualIndex} className="border border-gray-600 rounded-2xl bg-black/30 backdrop-blur-sm overflow-hidden">
+          <motion.div
+            key={actualIndex}
+            className="bg-transparent overflow-hidden border border-white/40 rounded-xl"
+            whileHover={{
+              scale: 1.02,
+              transition: { duration: 0.3, ease: "easeInOut" }
+            }}
+            variants={fadeInUp}
+          >
             {/* Question */}
-            <button
+            <motion.button
               onClick={() => toggleFAQ(actualIndex)}
               className="w-full text-left p-4 lg:p-6 focus:outline-none"
+              whileHover={{
+                backgroundColor: "rgba(255, 107, 0, 0.05)",
+                transition: { duration: 0.2, ease: "easeInOut" }
+              }}
             >
               <div className="flex items-center justify-between">
                 <h3 className="text-softx-orange font-semibold text-sm lg:text-base pr-4">
                   {faq.question}
                 </h3>
                 <div className="flex-shrink-0">
-                  <svg
-                    className={`w-5 h-5 text-softx-orange transform transition-transform duration-300 ${
-                      isOpen ? 'rotate-180' : ''
-                    }`}
+                  <motion.svg
+                    className="w-5 h-5 text-softx-orange"
                     fill="none"
                     viewBox="0 0 24 24"
                     stroke="currentColor"
+                    animate={{ rotate: isOpen ? 180 : 0 }}
+                    transition={{ duration: 0.3, ease: "easeInOut" }}
                   >
                     <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 9l-7 7-7-7" />
-                  </svg>
+                  </motion.svg>
                 </div>
               </div>
-            </button>
+            </motion.button>
 
             {/* Answer */}
             {isOpen && (
-              <div className="px-4 lg:px-6 pb-4 lg:pb-6">
+              <motion.div
+                className="px-4 lg:px-6 pb-4 lg:pb-6"
+                initial={{ opacity: 0, height: 0 }}
+                animate={{ opacity: 1, height: "auto" }}
+                exit={{ opacity: 0, height: 0 }}
+                transition={{ duration: 0.3, ease: "easeInOut" }}
+              >
                 <div className="border-t border-gray-600 pt-4">
                   <p className="text-gray-300 text-sm leading-relaxed">
                     {faq.answer}
                   </p>
                 </div>
-              </div>
+              </motion.div>
             )}
-          </div>
+          </motion.div>
         );
       })}
     </div>
   );
 
   return (
-    <section id="faqs" className="py-16 relative">
+    <motion.section
+      id="faqs"
+      className="py-16 relative"
+      initial="hidden"
+      whileInView="visible"
+      viewport={{ once: true, amount: 0.2 }}
+      variants={containerVariants}
+    >
       <div className="container mx-auto px-4 sm:px-6 lg:px-8 relative z-20">
-        
+
         {/* Section Header */}
-        <div className="text-center mb-16">
-          <h2 className="text-4xl sm:text-5xl md:text-6xl font-bold text-white mb-4">
+        <motion.div
+          className="text-center mb-16"
+          variants={fadeInUp}
+        >
+          <motion.h2
+            className="text-4xl sm:text-5xl md:text-6xl font-bold text-white mb-4"
+            variants={fadeInUp}
+          >
             FAQ's
-          </h2>
-          <h3 className="text-2xl sm:text-3xl md:text-4xl font-bold text-white">
+          </motion.h2>
+          <motion.h3
+            className="text-2xl sm:text-3xl md:text-4xl font-bold text-white"
+            variants={fadeInUp}
+          >
             Questions & Answers
-          </h3>
-        </div>
+          </motion.h3>
+        </motion.div>
 
         {/* FAQ Grid - Two Columns */}
         <div className="max-w-6xl mx-auto">
           <div className="grid grid-cols-1 lg:grid-cols-2 gap-6 lg:gap-8">
             {/* Left Column */}
-            {renderFAQColumn(leftColumnFAQs, 0)}
-            
+            <motion.div variants={slideFromLeft}>
+              {renderFAQColumn(leftColumnFAQs, 0)}
+            </motion.div>
+
             {/* Right Column */}
-            {renderFAQColumn(rightColumnFAQs, 1)}
+            <motion.div variants={slideFromRight}>
+              {renderFAQColumn(rightColumnFAQs, 1)}
+            </motion.div>
           </div>
         </div>
 
       </div>
-    </section>
+    </motion.section>
   );
 };
 

@@ -13,7 +13,7 @@ const Header = () => {
     };
 
     return (
-        <header className="fixed top-0 left-0 right-0 z-50 bg-black/20 backdrop-blur-md border-b border-white/5 overflow-visible">
+        <header className="fixed top-0 left-0 right-0 z-50 bg-gradient-to-r from-[rgba(37, 150, 190)] via-[#1a1f45cc] to-[#ff4500cc] backdrop-blur-md overflow-visible">
             <div className="container mx-auto px-4 sm:px-6 lg:px-8">
                 <div className="flex items-center justify-center h-14 sm:h-16 lg:h-20 relative overflow-visible">
                     {/* Centered Logo - Extended below header */}

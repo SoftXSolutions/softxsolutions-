@@ -62,8 +62,6 @@ const Contact = () => {
 
   return (
     <section id="contact" className="py-16 relative">
-      {/* Subtle gradient overlay */}
-      <div className="absolute inset-0 bg-gradient-to-br from-black/30 via-transparent to-softx-orange/20 pointer-events-none"></div>
       <div className="container mx-auto px-4 sm:px-6 lg:px-8 relative z-20">
         {/* Section Header */}
         <div className="text-center mb-16">
@@ -128,7 +126,7 @@ const Contact = () => {
           </div>
 
           {/* Contact Form */}
-          <div className="bg-softx-gray-light rounded-xl p-8 border border-softx-orange/10">
+          <div className="bg-transparent rounded-xl p-8">
             <h3 className="text-2xl font-bold text-softx-white mb-6">Send us a Message</h3>
             
             <form onSubmit={handleSubmit} className="space-y-6">
