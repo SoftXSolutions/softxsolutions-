@@ -3,7 +3,7 @@ import { useEffect, useRef, useState } from 'react';
 import ImagePlaceholder from './ImagePlaceholder';
 import wcuImage from '../assets/images/wcu.png';
 import wcu1Image from '../assets/images/wcu1.png';
-import outprojectp1Image from '../assets/images/ourprojectp1.png';
+import outprojectp1Image from '../assets/images/ie.jpeg';
 import wcumImage from '../assets/images/wcum.png';
 
 const AnimatedNumber = ({ value, delay = 0, suffix = "" }) => {
@@ -51,16 +51,16 @@ const OurProjects = () => {
 
   const fadeInUp = {
     hidden: {
-      y: 80,
+      y: 20,
       opacity: 0,
-      scale: 0.9
+      scale: 0.95
     },
     visible: {
       y: 0,
       opacity: 1,
       scale: 1,
       transition: {
-        duration: 1.6,
+        duration: 1.2,
         ease: [0.25, 0.46, 0.45, 0.94]
       }
     }
@@ -68,35 +68,35 @@ const OurProjects = () => {
 
   const scaleIn = {
     hidden: {
-      scale: 0.8,
+      scale: 0.9,
       opacity: 0,
-      y: 40
+      y: 10
     },
     visible: {
       scale: 1,
       opacity: 1,
       y: 0,
       transition: {
-        duration: 1.5,
+        duration: 1.2,
         ease: [0.25, 0.46, 0.45, 0.94],
         type: "spring",
-        bounce: 0.15
+        bounce: 0.1
       }
     }
   };
 
   const slideFromLeft = {
     hidden: {
-      x: -100,
+      x: 0,
       opacity: 0,
-      scale: 0.9
+      scale: 0.95
     },
     visible: {
       x: 0,
       opacity: 1,
       scale: 1,
       transition: {
-        duration: 1.7,
+        duration: 1.2,
         ease: [0.25, 0.46, 0.45, 0.94]
       }
     }
@@ -104,16 +104,16 @@ const OurProjects = () => {
 
   const slideFromRight = {
     hidden: {
-      x: 100,
+      x: 0,
       opacity: 0,
-      scale: 0.9
+      scale: 0.95
     },
     visible: {
       x: 0,
       opacity: 1,
       scale: 1,
       transition: {
-        duration: 1.7,
+        duration: 1.2,
         ease: [0.25, 0.46, 0.45, 0.94]
       }
     }
@@ -125,18 +125,18 @@ const OurProjects = () => {
 
   const buildContent = {
     'Web Platform': [
-      { title: 'Front End', items: ['Graphql','React Hook','ANT Design','Material UI','TypeScript','NEXT.JS','REACT.JS','Rest API'] },
-      { title: 'Back End', items: ['NODE. JS','PHP','Python','Java'] }
+      { title: 'Front End', items: ['Graphsql', 'React Hook', 'ANT Design', 'Material UI', 'TypeScript', 'NEXT.JS', 'REACT.JS', 'Rest API'] },
+      { title: 'Back End', items: ['NODE. JS', 'PHP', 'Python', 'Java'] }
     ],
     'AI Platforms': [
-      { title: 'Environments', items: ['Python','N8n','Make','Colab'] },
-      { title: 'Services', items: ['Model Training','Calling Agents','Custom Workflows','Custom Chatbots'] }
+      { title: 'Environments', items: ['Python', 'N8n', 'Make', 'Colab'] },
+      { title: 'Services', items: ['Model Training', 'Calling Agents', 'Custom Workflows', 'Custom Chatbots'] }
     ],
     'Mobile Apps': [
-      { title: 'Mobile Apps', items: ['Konlin','GO','Flutter','Swift'] }
+      { title: 'Mobile Apps', items: ['Kotlin', 'GO', 'Flutter', 'Swift'] }
     ],
     'Database': [
-      { title: 'Database', items: ['Mysql','Postgresl','Mongodb','Solr'] }
+      { title: 'Database', items: ['Mysql', 'Postgresl', 'Mongodb', 'Solr'] }
     ]
   };
 
@@ -147,26 +147,23 @@ const OurProjects = () => {
   }, [buildTab]);
 
   return (
-    <motion.section
+    <section
+      id="projects"
       className="py-16 relative"
-      initial="hidden"
-      whileInView="visible"
-      viewport={{ once: true, amount: 0.2 }}
-      variants={containerVariants}
     >
       <div className="container mx-auto px-4 sm:px-6 lg:px-8 relative z-20">
 
         {/* Section Header */}
         <motion.div
           className="text-center mb-16"
+          initial="hidden"
+          whileInView="visible"
+          viewport={{ once: true, amount: 0.1 }}
           variants={fadeInUp}
         >
-          <motion.h2
-            className="text-4xl sm:text-5xl md:text-6xl font-bold text-white mb-12"
-            variants={fadeInUp}
-          >
+          <h2 className="text-4xl sm:text-5xl md:text-6xl font-bold text-white mb-12">
             Our Projects
-          </motion.h2>
+          </h2>
         </motion.div>
 
         {/* Services Overview - Alternating Cards (below Our Approach) */}
@@ -174,13 +171,13 @@ const OurProjects = () => {
           className="space-y-6 mb-20"
           initial="hidden"
           whileInView="visible"
-          viewport={{ once: true, amount: 0.25 }}
+          viewport={{ once: true, amount: 0.1 }}
           variants={containerVariants}
         >
           {/* 1. UI/UX Design */}
           <motion.div
             variants={slideFromLeft}
-            className="border border-white/40 rounded-xl p-6 lg:p-8 bg-transparent"
+            className="border border-white/60 rounded-xl p-6 lg:p-8 bg-transparent"
           >
             <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 items-start">
               <div>
@@ -204,7 +201,7 @@ const OurProjects = () => {
           {/* 2. Web Development */}
           <motion.div
             variants={slideFromRight}
-            className="border border-white/40 rounded-xl p-6 lg:p-8 bg-transparent"
+            className="border border-white/60 rounded-xl p-6 lg:p-8 bg-transparent"
           >
             <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 items-start">
               <div>
@@ -227,7 +224,7 @@ const OurProjects = () => {
           {/* 3. Mobile Development */}
           <motion.div
             variants={slideFromLeft}
-            className="border border-white/40 rounded-xl p-6 lg:p-8 bg-transparent"
+            className="border border-white/60 rounded-xl p-6 lg:p-8 bg-transparent"
           >
             <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 items-start">
               <div>
@@ -250,7 +247,7 @@ const OurProjects = () => {
           {/* 4. Cloud Services */}
           <motion.div
             variants={slideFromRight}
-            className="border border-white/40 rounded-xl p-6 lg:p-8 bg-transparent"
+            className="border border-white/60 rounded-xl p-6 lg:p-8 bg-transparent"
           >
             <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 items-start">
               <div>
@@ -270,18 +267,18 @@ const OurProjects = () => {
             </div>
           </motion.div>
         </motion.div>
-        
-        
+
+
 
         {/* Projects Grid */}
         <motion.div
-          className="relative flex flex-col lg:flex-row justify-center items-end gap-8 lg:gap-12 mb-12"
+          className="relative flex flex-col lg:flex-row justify-center items-center lg:items-end gap-8 lg:gap-12 mb-12"
           variants={containerVariants}
         >
 
           {/* Project 1 - Left (INBV TV) */}
           <motion.div
-            className="relative"
+            className="relative mx-auto lg:mx-0"
             variants={slideFromLeft}
             whileHover={{
               y: -15,
@@ -292,7 +289,7 @@ const OurProjects = () => {
             <motion.img
               src={wcuImage}
               alt="INBV TV Project"
-              className="w-64 h-48 lg:w-80 lg:h-60 rounded-2xl object-cover shadow-2xl"
+              className="w-full max-w-xs sm:w-64 h-48 sm:h-48 lg:w-80 lg:h-60 rounded-2xl object-cover shadow-2xl"
               variants={scaleIn}
               whileHover={{
                 scale: 1.02,
@@ -306,7 +303,7 @@ const OurProjects = () => {
             <ImagePlaceholder
               src=""
               alt="INBV TV Project"
-              className="hidden w-64 h-48 lg:w-80 lg:h-60 rounded-2xl object-cover shadow-2xl"
+              className="hidden w-full max-w-xs sm:w-64 h-48 sm:h-48 lg:w-80 lg:h-60 rounded-2xl object-cover shadow-2xl"
               placeholderText="wcu.png"
             />
 
@@ -328,7 +325,7 @@ const OurProjects = () => {
 
           {/* Project 2 - Center (Kallin AI) - Higher Position */}
           <motion.div
-            className="relative lg:-mt-8"
+            className="relative mx-auto lg:mx-0 lg:-mt-8"
             variants={fadeInUp}
             whileHover={{
               y: -15,
@@ -339,7 +336,7 @@ const OurProjects = () => {
             <img
               src={wcu1Image}
               alt="Kallin AI Project"
-              className="w-72 h-56 lg:w-88 lg:h-68 rounded-2xl object-cover shadow-2xl"
+              className="w-full max-w-sm sm:w-72 h-56 sm:h-56 lg:w-88 lg:h-68 rounded-2xl object-cover shadow-2xl"
               onError={(e) => {
                 e.target.style.display = 'none';
                 e.target.nextSibling.style.display = 'block';
@@ -348,7 +345,7 @@ const OurProjects = () => {
             <ImagePlaceholder
               src=""
               alt="Kallin AI Project"
-              className="hidden w-72 h-56 lg:w-88 lg:h-68 rounded-2xl object-cover shadow-2xl"
+              className="hidden w-full max-w-sm sm:w-72 h-56 sm:h-56 lg:w-88 lg:h-68 rounded-2xl object-cover shadow-2xl"
               placeholderText="wcu1.png"
             />
 
@@ -370,7 +367,7 @@ const OurProjects = () => {
 
           {/* Project 3 - Right (IELTS Academics) */}
           <motion.div
-            className="relative"
+            className="relative mx-auto lg:mx-0"
             variants={slideFromRight}
             whileHover={{
               y: -15,
@@ -381,7 +378,7 @@ const OurProjects = () => {
             <img
               src={outprojectp1Image}
               alt="IELTS Academics Project"
-              className="w-64 h-48 lg:w-80 lg:h-60 rounded-2xl object-cover shadow-2xl"
+              className="w-full max-w-xs sm:w-64 h-48 sm:h-48 lg:w-80 lg:h-60 rounded-2xl object-cover shadow-2xl"
               onError={(e) => {
                 e.target.style.display = 'none';
                 e.target.nextSibling.style.display = 'block';
@@ -390,7 +387,7 @@ const OurProjects = () => {
             <ImagePlaceholder
               src=""
               alt="IELTS Academics Project"
-              className="hidden w-64 h-48 lg:w-80 lg:h-60 rounded-2xl object-cover shadow-2xl"
+              className="hidden w-full max-w-xs sm:w-64 h-48 sm:h-48 lg:w-80 lg:h-60 rounded-2xl object-cover shadow-2xl"
               placeholderText="outprojectp1.png"
             />
 
@@ -418,6 +415,14 @@ const OurProjects = () => {
         >
           <motion.button
             className="bg-softx-orange text-white px-8 py-4 rounded-full font-semibold text-lg shadow-lg"
+            onClick={() => {
+              const el = document.getElementById('contact');
+              if (el) {
+                el.scrollIntoView({ behavior: 'smooth', block: 'start' });
+              } else {
+                window.scrollTo({ top: 0, behavior: 'smooth' });
+              }
+            }}
             whileHover={{
               scale: 1.05,
               boxShadow: "0 8px 25px rgba(255, 107, 0, 0.4)",
@@ -436,22 +441,22 @@ const OurProjects = () => {
           className="mb-20"
           initial="hidden"
           whileInView="visible"
-          viewport={{ once: true, amount: 0.2 }}
+          viewport={{ once: true, amount: 0.1 }}
           variants={containerVariants}
         >
-          <div className="grid grid-cols-1 lg:grid-cols-3 gap-10 items-start">
+          <div className="grid grid-cols-1 lg:grid-cols-3 gap-8 lg:gap-10 items-start">
             <motion.div className="col-span-1" variants={slideFromLeft}>
               <h3 className="text-4xl sm:text-5xl font-bold text-white leading-tight">
                 Building With
                 <br />
                 the Best Tools
               </h3>
-              <div className="mt-8 space-y-4 max-w-xs">
-                {['Web Platform','AI Platforms','Mobile Apps','Database'].map(tab => (
+              <div className="mt-8 space-y-3 sm:space-y-4 w-full lg:max-w-xs">
+                {['Web Platform', 'AI Platforms', 'Mobile Apps', 'Database'].map(tab => (
                   <button
                     key={tab}
                     onClick={() => setBuildTab(tab)}
-                    className={`w-full text-left px-6 py-3 rounded-full font-semibold transition ${buildTab===tab ? 'bg-softx-orange text-white' : 'border border-white/20 text-white/80 hover:bg-white/5'}`}
+                    className={`w-full text-left px-4 sm:px-6 py-2 sm:py-3 rounded-full font-semibold text-sm sm:text-base transition ${buildTab === tab ? 'bg-softx-orange text-white' : 'border border-white/40 text-white/80 hover:bg-white/5'}`}
                   >
                     {tab}
                   </button>
@@ -460,7 +465,7 @@ const OurProjects = () => {
             </motion.div>
 
             <motion.div className="col-span-1 lg:col-span-2" variants={slideFromRight}>
-              <div className={`border border-white/20 rounded-2xl p-6 lg:p-8 transition-all duration-500 ${buildVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-2'}`}>
+              <div className={`border border-white/40 rounded-2xl p-4 sm:p-6 lg:p-8 transition-all duration-500 ${buildVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-2'}`}>
                 <motion.div
                   key={buildTab}
                   className={`grid grid-cols-1 ${buildContent[buildTab].length > 1 ? 'lg:grid-cols-2' : 'lg:grid-cols-1'} gap-8`}
@@ -470,12 +475,12 @@ const OurProjects = () => {
                 >
                   {buildContent[buildTab].map(col => (
                     <div key={col.title}>
-                      <h4 className="text-2xl font-semibold text-white mb-4">{col.title}</h4>
-                      <div className="space-y-4">
+                      <h4 className="text-xl sm:text-2xl font-semibold text-white mb-3 sm:mb-4">{col.title}</h4>
+                      <div className="space-y-3 sm:space-y-4">
                         {col.items.map((label, i) => (
-                          <motion.div key={label} variants={fadeInUp} className="flex items-center gap-4 border border-white/20 rounded-xl px-4 py-3">
-                            <span className="w-10 h-10 rounded-full border border-white/30 flex items-center justify-center text-white/90 text-sm">{String(i+1).padStart(2,'0')}</span>
-                            <span className="text-white/90 font-medium">{label}</span>
+                          <motion.div key={label} variants={fadeInUp} className="flex items-center gap-3 sm:gap-4 border border-white/40 rounded-xl px-3 sm:px-4 py-2 sm:py-3">
+                            <span className="w-8 h-8 sm:w-10 sm:h-10 rounded-full bg-softx-orange flex items-center justify-center text-white font-semibold text-xs sm:text-sm flex-shrink-0">{String(i + 1).padStart(2, '0')}</span>
+                            <span className="text-white/90 font-medium text-sm sm:text-base">{label}</span>
                           </motion.div>
                         ))}
                       </div>
@@ -490,10 +495,13 @@ const OurProjects = () => {
         {/* Our Approach Section */}
         <motion.div
           className="mb-20"
+          initial="hidden"
+          whileInView="visible"
+          viewport={{ once: true, amount: 0.1 }}
           variants={scaleIn}
         >
           <motion.div
-            className="border border-white/40 rounded-xl p-8 lg:p-12 bg-transparent"
+            className="border border-white/60 rounded-xl p-6 sm:p-8 lg:p-12 bg-transparent"
             whileHover={{
               scale: 1.01,
               transition: { duration: 0.4, ease: "easeInOut" }
@@ -574,7 +582,7 @@ const OurProjects = () => {
         </motion.div>
 
       </div>
-    </motion.section>
+    </section>
   );
 };
 

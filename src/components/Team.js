@@ -1,28 +1,27 @@
 import { motion, useSpring } from 'framer-motion';
-import { useEffect, useRef, useState } from 'react';
+import { useEffect, useRef } from 'react';
 import ImagePlaceholder from './ImagePlaceholder';
 import person1Image from '../assets/images/person1.png';
 import person2Image from '../assets/images/p2.png';
 import person3Image from '../assets/images/p3.png';
-import mosImage from '../assets/images/mos.png';
 
 const AnimatedNumber = ({ value, delay = 0, suffix = "" }) => {
   const ref = useRef(null);
-  const spring = useSpring(0, { 
-    mass: 1.2, 
-    stiffness: 60, 
+  const spring = useSpring(0, {
+    mass: 1.2,
+    stiffness: 60,
     damping: 25,
     restDelta: 0.001
   });
-  
+
   useEffect(() => {
     const timer = setTimeout(() => {
       spring.set(value);
     }, delay);
-    
+
     return () => clearTimeout(timer);
   }, [value, spring, delay]);
-  
+
   useEffect(() => {
     const unsub = spring.on('change', (latest) => {
       if (ref.current) {
@@ -31,44 +30,11 @@ const AnimatedNumber = ({ value, delay = 0, suffix = "" }) => {
     });
     return () => unsub();
   }, [spring, suffix]);
-  
+
   return <span ref={ref}>0{suffix}</span>;
 };
 
 const Team = () => {
-  const [formStatus, setFormStatus] = useState("");
-  const [submitting, setSubmitting] = useState(false);
-
-  const handleContactSubmit = async (e) => {
-    e.preventDefault();
-    setFormStatus("");
-    setSubmitting(true);
-    try {
-      const data = new FormData(e.currentTarget);
-      const res = await fetch('https://formspree.io/f/mdkpanqg', {
-        method: 'POST',
-        body: data,
-        headers: { 'Accept': 'application/json' }
-      });
-      if (res.ok) {
-        setFormStatus('Message sent successfully!');
-        e.currentTarget.reset();
-      } else {
-        let msg = 'Failed to send. Try again later.';
-        try {
-          const j = await res.json();
-          if (j && j.errors && j.errors.length) {
-            msg = j.errors.map((e) => e.message).join(', ');
-          }
-        } catch {}
-        setFormStatus(msg);
-      }
-    } catch (err) {
-      setFormStatus('Failed to send. Check your connection and try again.');
-    } finally {
-      setSubmitting(false);
-    }
-  };
   // Ultra-smooth animation variants
   const containerVariants = {
     hidden: { opacity: 0 },
@@ -370,131 +336,7 @@ const Team = () => {
           </motion.div>
         </motion.div>
 
-        {/* Ready to Start Section */}
-        <motion.div
-          className="p-8 lg:p-12 bg-transparent border border-white/40 rounded-xl"
-          variants={scaleIn}
-        >
-          <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
 
-            {/* Left Side - Form */}
-            <motion.div variants={slideFromLeft}>
-              <h3 className="text-4xl lg:text-5xl font-bold text-white mb-4">
-                Ready to Start<br />Your Project?
-              </h3>
-              <p className="text-gray-300 text-sm mb-8">
-                We can give you the best solutions for your query.
-              </p>
-
-              <form className="space-y-6" onSubmit={handleContactSubmit}>
-                <input type="hidden" name="_subject" value="New Contact via SoftXSolutions" />
-                <input type="text" name="_gotcha" className="hidden" tabIndex="-1" autoComplete="off" />
-                <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-                  <div>
-                    <label className="block text-white text-sm mb-2">Full Name</label>
-                    <input
-                      type="text"
-                      name="name"
-                      placeholder="Add Name"
-                      className="w-full bg-transparent border-b border-gray-600 text-white placeholder-gray-500 py-2 focus:border-softx-orange outline-none"
-                      required
-                    />
-                  </div>
-                  <div>
-                    <label className="block text-white text-sm mb-2">Subject</label>
-                    <input
-                      type="text"
-                      name="subject"
-                      placeholder="Add Subject"
-                      className="w-full bg-transparent border-b border-gray-600 text-white placeholder-gray-500 py-2 focus:border-softx-orange outline-none"
-                    />
-                  </div>
-                </div>
-
-                <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-                  <div>
-                    <label className="block text-white text-sm mb-2">Email Address</label>
-                    <input
-                      type="email"
-                      name="email"
-                      placeholder="Add email"
-                      className="w-full bg-transparent border-b border-gray-600 text-white placeholder-gray-500 py-2 focus:border-softx-orange outline-none"
-                      required
-                    />
-                  </div>
-                  <div>
-                    <label className="block text-white text-sm mb-2">Contact Number</label>
-                    <input
-                      type="tel"
-                      name="phone"
-                      placeholder="Add Number"
-                      className="w-full bg-transparent border-b border-gray-600 text-white placeholder-gray-500 py-2 focus:border-softx-orange outline-none"
-                    />
-                  </div>
-                </div>
-
-                <div>
-                  <label className="block text-white text-sm mb-2">How can we help?</label>
-                  <textarea
-                    name="message"
-                    placeholder="Feel free to ask for a solution!"
-                    rows="4"
-                    className="w-full bg-transparent border border-gray-600 rounded-lg text-white placeholder-gray-500 p-4 focus:border-softx-orange outline-none resize-none"
-                    required
-                  ></textarea>
-                </div>
-
-                <motion.button
-                  type="submit"
-                  disabled={submitting}
-                  className="bg-softx-orange text-white px-8 py-3 rounded-full font-semibold disabled:opacity-60 disabled:cursor-not-allowed"
-                  whileHover={{
-                    scale: 1.05,
-                    boxShadow: "0 8px 25px rgba(255, 107, 0, 0.4)",
-                    transition: { duration: 0.3, ease: "easeInOut" }
-                  }}
-                  whileTap={{
-                    scale: 0.98,
-                    transition: { duration: 0.1 }
-                  }}
-                >
-                  {submitting ? 'Sending...' : 'Send Message'}
-                </motion.button>
-
-                {formStatus && (
-                  <p className="text-softx-orange text-sm mt-2">{formStatus}</p>
-                )}
-              </form>
-            </motion.div>
-
-            {/* Right Side - Image */}
-            <motion.div
-              className="flex justify-center"
-              variants={slideFromRight}
-            >
-              <motion.img
-                src={mosImage}
-                alt="Ready to Start"
-                className="w-80 h-auto object-contain"
-                variants={scaleIn}
-                whileHover={{
-                  scale: 1.05,
-                  transition: { duration: 0.3, ease: "easeInOut" }
-                }}
-                onError={(e) => {
-                  e.target.style.display = 'none';
-                  e.target.nextSibling.style.display = 'block';
-                }}
-              />
-              <ImagePlaceholder
-                src=""
-                alt="Ready to Start"
-                className="hidden w-80 h-60 rounded-2xl object-cover"
-                placeholderText="mos.png"
-              />
-            </motion.div>
-          </div>
-        </motion.div>
 
       </div>
     </motion.section>

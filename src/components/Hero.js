@@ -2,24 +2,25 @@
 import { useEffect, useRef } from 'react';
 import { motion, useSpring } from 'framer-motion';
 import laptopImage from '../assets/images/laptop.png';
+import softxsolLogo from '../assets/images/softxsol.png';
 
 const AnimatedNumber = ({ value, delay = 0 }) => {
   const ref = useRef(null);
-  const spring = useSpring(0, { 
-    mass: 1.2, 
-    stiffness: 60, 
+  const spring = useSpring(0, {
+    mass: 1.2,
+    stiffness: 60,
     damping: 25,
     restDelta: 0.001
   });
-  
+
   useEffect(() => {
     const timer = setTimeout(() => {
       spring.set(value);
     }, delay);
-    
+
     return () => clearTimeout(timer);
   }, [value, spring, delay]);
-  
+
   useEffect(() => {
     const unsub = spring.on('change', (latest) => {
       if (ref.current) {
@@ -28,7 +29,7 @@ const AnimatedNumber = ({ value, delay = 0 }) => {
     });
     return () => unsub();
   }, [spring]);
-  
+
   return <span ref={ref}>0</span>;
 };
 
@@ -47,51 +48,51 @@ const Hero = () => {
   };
 
   const slideFromLeft = {
-    hidden: { 
-      x: -120, 
+    hidden: {
+      x: -120,
       opacity: 0,
       scale: 0.95
     },
-    visible: { 
-      x: 0, 
+    visible: {
+      x: 0,
       opacity: 1,
       scale: 1,
-      transition: { 
-        duration: 1.5, 
+      transition: {
+        duration: 1.5,
         ease: [0.25, 0.46, 0.45, 0.94] // Custom bezier for ultra-smooth motion
       }
     }
   };
 
   const slideFromRight = {
-    hidden: { 
-      x: 120, 
+    hidden: {
+      x: 120,
       opacity: 0,
       scale: 0.95
     },
-    visible: { 
-      x: 0, 
+    visible: {
+      x: 0,
       opacity: 1,
       scale: 1,
-      transition: { 
-        duration: 1.5, 
+      transition: {
+        duration: 1.5,
         ease: [0.25, 0.46, 0.45, 0.94]
       }
     }
   };
 
   const scaleIn = {
-    hidden: { 
-      scale: 0.7, 
+    hidden: {
+      scale: 0.7,
       opacity: 0,
       y: 20
     },
-    visible: { 
-      scale: 1, 
+    visible: {
+      scale: 1,
       opacity: 1,
       y: 0,
-      transition: { 
-        duration: 1.8, 
+      transition: {
+        duration: 1.8,
         ease: [0.25, 0.46, 0.45, 0.94],
         type: "spring",
         bounce: 0.2
@@ -100,24 +101,24 @@ const Hero = () => {
   };
 
   const fadeInUp = {
-    hidden: { 
-      y: 40, 
+    hidden: {
+      y: 40,
       opacity: 0,
       scale: 0.98
     },
-    visible: { 
-      y: 0, 
+    visible: {
+      y: 0,
       opacity: 1,
       scale: 1,
-      transition: { 
-        duration: 1.4, 
+      transition: {
+        duration: 1.4,
         ease: [0.25, 0.46, 0.45, 0.94]
       }
     }
   };
 
   return (
-    <motion.section 
+    <motion.section
       className="relative min-h-screen overflow-hidden pt-16 lg:pt-20 font-primary"
       initial="hidden"
       animate="visible"
@@ -126,60 +127,76 @@ const Hero = () => {
       <div className="container mx-auto px-4 sm:px-6 lg:px-8 xl:px-12 relative z-20 h-full">
 
         {/* Mobile Layout */}
-        <div className="block md:hidden text-center py-8">
-          <motion.h1
-            className="text-3xl sm:text-4xl font-bold text-white mb-6"
-            variants={slideFromLeft}
-          >
-            Your Vision
-          </motion.h1>
-
-          <div className="mb-6 px-4">
-            <motion.img
-              src={laptopImage}
-              alt="SoftXSol Laptop Dashboard"
-              className="w-full max-w-xs mx-auto h-auto object-contain drop-shadow-2xl"
-              variants={scaleIn}
-            />
-          </div>
-
-          <motion.h2
-            className="text-3xl sm:text-4xl font-bold text-white mb-8"
-            variants={slideFromRight}
-          >
-            Our Code
-          </motion.h2>
-
-          {/* Mobile Info Cards */}
-          <div className="space-y-4 px-4">
-            <div className="bg-transparent p-4">
-              <h3 className="text-softx-orange font-bold text-lg mb-2">SOFTXSOLUTIONS</h3>
-              <p className="text-gray-300 text-sm">We can provide solutions for every problem in your life</p>
+        <div className="block md:hidden relative py-8">
+          {/* Main Hero Content */}
+          <div className="relative min-h-[70vh] mb-8">
+            {/* Your Vision - Top, large text behind laptop */}
+            <div className="absolute top-12 left-1/2 -translate-x-1/2 z-10 pointer-events-none select-none w-full text-center px-2">
+              <motion.h1
+                className="text-[13vw] sm:text-[11vw] font-extrabold text-white/90 leading-none tracking-tight whitespace-nowrap"
+                variants={slideFromLeft}
+              >
+                Your Vision
+              </motion.h1>
             </div>
 
+            {/* Laptop Image - Center, above text */}
+            <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 z-30 w-full px-4">
+              <motion.img
+                src={laptopImage}
+                alt="SoftXSol Laptop Dashboard"
+                className="w-full max-w-md mx-auto h-auto object-contain drop-shadow-2xl"
+                variants={scaleIn}
+              />
+            </div>
+
+            {/* Our Code - Bottom, large text behind laptop */}
+            <div className="absolute bottom-8 left-1/2 -translate-x-1/2 z-10 pointer-events-none select-none w-full text-center px-2">
+              <motion.h2
+                className="text-[13vw] sm:text-[11vw] font-extrabold text-white/90 leading-none tracking-tight whitespace-nowrap"
+                variants={slideFromRight}
+              >
+                Our Code
+              </motion.h2>
+            </div>
+          </div>
+
+          {/* Mobile Info Cards - Below the hero content */}
+          <div className="relative z-40 space-y-4 max-w-md mx-auto px-4">
             <motion.div
-              className="bg-transparent p-4 text-center"
-              style={{ clipPath: 'polygon(0% 0%, calc(100% - 16px) 0%, 100% 16px, 100% 100%, 0% 100%)' }}
+              className="bg-transparent border border-white/30 rounded-2xl p-5"
+              variants={fadeInUp}
+            >
+              <img src={softxsolLogo} alt="SoftXSol Logo" className="h-7 mb-3 inline-block object-contain" />
+              <p className="text-gray-300 text-sm leading-relaxed">We can provide solutions for every problem in your life</p>
+            </motion.div>
+
+            <motion.div
+              className="bg-transparent border border-softx-orange rounded-2xl p-5 text-center"
+              variants={fadeInUp}
               initial={{ y: 20, opacity: 0 }}
               animate={{ y: 0, opacity: 1 }}
-              transition={{ duration: 0.8, ease: 'easeOut' }}
+              transition={{ duration: 0.8, ease: 'easeOut', delay: 0.2 }}
             >
-              <div className="text-3xl font-bold text-white mb-2">
+              <div className="text-4xl font-bold text-white mb-2">
                 <AnimatedNumber value={5} delay={800} />
                 <span>+</span>
               </div>
               <div className="text-gray-300 text-sm">Years Of Experience</div>
             </motion.div>
 
-            <div className="bg-transparent p-4">
-              <p className="text-gray-300 text-sm mb-4">Let's create something amazing together with SoftXSolutions</p>
+            <motion.div
+              className="bg-transparent border border-white/30 rounded-2xl rounded-tr-[32px] p-5"
+              variants={fadeInUp}
+            >
+              <p className="text-gray-300 text-sm mb-4 leading-relaxed">Let's create something amazing together with SoftXSolutions</p>
               <button
                 onClick={() => document.getElementById('contact').scrollIntoView({ behavior: 'smooth' })}
-                className="bg-softx-orange text-white px-6 py-3 rounded-lg font-semibold text-sm hover:bg-softx-orange-light transition-all duration-300 w-full"
+                className="bg-softx-orange text-white px-6 py-3 rounded-full font-semibold text-sm hover:bg-softx-orange-light transition-all duration-300 w-full shadow-lg"
               >
                 Get Started
               </button>
-            </div>
+            </motion.div>
           </div>
         </div>
 
@@ -231,38 +248,38 @@ const Hero = () => {
           {/* Transparent Info Boxes - Better positioned with more space */}
 
           {/* Top Left Info Box - Web Development */}
-          <motion.div 
+          <motion.div
             className="absolute top-52 left-6 lg:left-12 xl:left-20 z-30"
             variants={containerVariants}
           >
             <ul className="space-y-4 text-white/70 text-sm lg:text-base tracking-wide">
-              <motion.li 
+              <motion.li
                 className="hover:text-orange-500 transition-colors duration-500"
                 variants={fadeInUp}
-                whileHover={{ 
-                  scale: 1.05, 
+                whileHover={{
+                  scale: 1.05,
                   x: 10,
                   transition: { duration: 0.3, ease: "easeInOut" }
                 }}
               >
                 Web Development
               </motion.li>
-              <motion.li 
+              <motion.li
                 className="hover:text-orange-500 transition-colors duration-500"
                 variants={fadeInUp}
-                whileHover={{ 
-                  scale: 1.05, 
+                whileHover={{
+                  scale: 1.05,
                   x: 10,
                   transition: { duration: 0.3, ease: "easeInOut" }
                 }}
               >
                 AI Automations
               </motion.li>
-              <motion.li 
+              <motion.li
                 className="hover:text-orange-500 transition-colors duration-500"
                 variants={fadeInUp}
-                whileHover={{ 
-                  scale: 1.05, 
+                whileHover={{
+                  scale: 1.05,
                   x: 10,
                   transition: { duration: 0.3, ease: "easeInOut" }
                 }}
@@ -278,19 +295,19 @@ const Hero = () => {
             <motion.div
               className="bg-transparent px-6 py-5 border border-white/20 rounded-2xl"
               variants={slideFromRight}
-              whileHover={{ 
+              whileHover={{
                 scale: 1.02,
                 y: -5,
                 transition: { duration: 0.4, ease: "easeInOut" }
               }}
             >
-              <motion.h3 
-                className="text-white font-semibold tracking-wide text-base lg:text-lg mb-2"
+              <motion.img
+                src={softxsolLogo}
+                alt="SoftXSol Logo"
+                className="h-6 lg:h-8 mb-2 object-contain"
                 variants={fadeInUp}
-              >
-                SOFTXSOLUTIONS
-              </motion.h3>
-              <motion.p 
+              />
+              <motion.p
                 className="text-gray-300 text-xs lg:text-sm leading-relaxed"
                 variants={fadeInUp}
               >
@@ -304,20 +321,20 @@ const Hero = () => {
             <motion.div
               className="bg-transparent px-8 py-6 text-center border border-white/20 rounded-2xl"
               variants={scaleIn}
-              whileHover={{ 
+              whileHover={{
                 scale: 1.05,
                 y: -8,
                 transition: { duration: 0.4, ease: "easeInOut" }
               }}
             >
-              <motion.div 
+              <motion.div
                 className="text-4xl lg:text-5xl xl:text-6xl font-bold text-white mb-2"
                 initial={{ scale: 0 }}
                 animate={{ scale: 1 }}
-                transition={{ 
-                  delay: 1.2, 
-                  duration: 1.0, 
-                  type: "spring", 
+                transition={{
+                  delay: 1.2,
+                  duration: 1.0,
+                  type: "spring",
                   bounce: 0.4,
                   ease: "easeInOut"
                 }}
@@ -325,7 +342,7 @@ const Hero = () => {
                 <AnimatedNumber value={5} delay={1200} />
                 <span>+</span>
               </motion.div>
-              <motion.div 
+              <motion.div
                 className="text-gray-300 text-xs lg:text-sm"
                 variants={fadeInUp}
               >
@@ -343,19 +360,19 @@ const Hero = () => {
           </div>
 
           {/* Bottom Left CTA Button - Better positioned */}
-          <motion.div 
+          <motion.div
             className="absolute bottom-12 left-6 lg:left-12 xl:left-20 z-30 max-w-[280px]"
             variants={slideFromLeft}
           >
-            <motion.div 
+            <motion.div
               className="bg-transparent p-5 border border-white/20 rounded-2xl rounded-tr-[36px]"
-              whileHover={{ 
+              whileHover={{
                 scale: 1.02,
                 y: -5,
                 transition: { duration: 0.4, ease: "easeInOut" }
               }}
             >
-              <motion.p 
+              <motion.p
                 className="text-gray-300 text-xs lg:text-sm mb-4 leading-relaxed"
                 variants={fadeInUp}
               >
@@ -365,12 +382,12 @@ const Hero = () => {
                 onClick={() => document.getElementById('contact').scrollIntoView({ behavior: 'smooth' })}
                 className="bg-softx-orange text-white px-6 py-3 rounded-full font-semibold text-sm w-full shadow-lg"
                 variants={fadeInUp}
-                whileHover={{ 
+                whileHover={{
                   scale: 1.05,
                   boxShadow: "0 8px 25px rgba(255, 107, 0, 0.4)",
                   transition: { duration: 0.3, ease: "easeInOut" }
                 }}
-                whileTap={{ 
+                whileTap={{
                   scale: 0.98,
                   transition: { duration: 0.1 }
                 }}
@@ -385,19 +402,19 @@ const Hero = () => {
       </div>
 
       {/* Background decorative elements */}
-      <motion.div 
+      <motion.div
         className="absolute top-1/4 left-10 w-2 h-32 bg-softx-orange/30 rounded-full blur-sm"
         initial={{ opacity: 0, scale: 0 }}
         animate={{ opacity: 1, scale: 1 }}
         transition={{ delay: 2, duration: 1.5, ease: "easeInOut" }}
       />
-      <motion.div 
+      <motion.div
         className="absolute bottom-1/4 right-10 w-2 h-24 bg-softx-orange/20 rounded-full blur-sm"
         initial={{ opacity: 0, scale: 0 }}
         animate={{ opacity: 1, scale: 1 }}
         transition={{ delay: 2.3, duration: 1.5, ease: "easeInOut" }}
       />
-      <motion.div 
+      <motion.div
         className="absolute top-1/3 right-1/4 w-1 h-20 bg-softx-orange/20 rounded-full blur-sm"
         initial={{ opacity: 0, scale: 0 }}
         animate={{ opacity: 1, scale: 1 }}

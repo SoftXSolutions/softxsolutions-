@@ -10,6 +10,7 @@ import FAQ from './components/FAQ';
 import Contact from './components/Contact';
 import Footer from './components/Footer';
 import WhatsAppFloat from './components/WhatsAppFloat';
+import BackToTop from './components/BackToTop';
 
 function App() {
   return (
@@ -32,6 +33,7 @@ function App() {
         <FAQ />
         <Contact />
       </main>
+      <BackToTop />
       <Footer />
       <WhatsAppFloat />
     </div>

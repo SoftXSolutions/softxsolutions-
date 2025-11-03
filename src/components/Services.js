@@ -1,10 +1,10 @@
 
 import { motion } from 'framer-motion';
 import ImagePlaceholder from './ImagePlaceholder';
-import wcuImage from '../assets/images/wcu.png';
-import wcu1Image from '../assets/images/wcu1.png';
-import outprojectp1Image from '../assets/images/ourprojectp1.png';
-import wcumImage from '../assets/images/wcum.png';
+import wcuImage from '../assets/images/rs.jpeg';
+import wcu1Image from '../assets/images/logi.jpeg';
+import outprojectp1Image from '../assets/images/ec.jpeg';
+import wcumImage from '../assets/images/cb.jpeg';
 
 const Services = () => {
   // Animation variants
@@ -87,25 +87,25 @@ const Services = () => {
       title: "Real Estate",
       description: "AI calling agents qualify leads and book showings 24/7. IDX/MLS sites, property CRM, automated SMS/WhatsApp follow-ups, and agent dashboards that convert.",
       image: wcuImage,
-      imagePlaceholder: "wcu.png"
+      imagePlaceholder: "rs.jpeg"
     },
     {
       title: "Logistic",
       description: "Dispatch & driver apps with live GPS and route optimization. Customer portal for quotes, tracking, ePOD, and automated status updates.",
       image: wcu1Image,
-      imagePlaceholder: "wcu1.png"
+      imagePlaceholder: "logi.jpeg"
     },
     {
       title: "ECommerce",
       description: "High-converting Shopify/headless stores with blazing speed. AI product search, smart upsells, inventory sync, abandoned-cart SMS, and SEO baked in.",
       image: outprojectp1Image,
-      imagePlaceholder: "ourprojectp1.png"
+      imagePlaceholder: "ec.jpeg"
     },
     {
       title: "Government",
       description: "Accessible citizen portals and secure case management. Multilingual chatbots, appointment booking, and analytics—cloud-first and compliance-minded.",
       image: wcumImage,
-      imagePlaceholder: "wcum.png"
+      imagePlaceholder: "cb.jpeg"
     }
   ];
 
@@ -141,6 +141,10 @@ const Services = () => {
               SoftXSolutions designs and ships web, mobile, and AI systems that launch fast, scale safely, and drive real revenue. Pick your industry to see what we can deploy in weeks.
             </motion.p>
             <motion.button
+              onClick={() => {
+                const el = document.getElementById('contact');
+                if (el) el.scrollIntoView({ behavior: 'smooth' });
+              }}
               className="bg-softx-orange text-white px-8 py-4 rounded-full font-semibold text-lg hover:bg-softx-orange-light hover:scale-105 transition-all duration-300"
               variants={leftContentVariants}
               whileHover={{ scale: 1.05 }}

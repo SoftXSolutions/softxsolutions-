@@ -1,8 +1,18 @@
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import logoImage from '../assets/images/logo.png';
 
 const Header = () => {
     const [isMenuOpen, setIsMenuOpen] = useState(false);
+    const [isScrolled, setIsScrolled] = useState(false);
+
+    useEffect(() => {
+        const handleScroll = () => {
+            setIsScrolled(window.scrollY > 50);
+        };
+
+        window.addEventListener('scroll', handleScroll);
+        return () => window.removeEventListener('scroll', handleScroll);
+    }, []);
 
     const scrollToSection = (sectionId) => {
         const element = document.getElementById(sectionId);
@@ -13,16 +23,22 @@ const Header = () => {
     };
 
     return (
-        <header className="fixed top-0 left-0 right-0 z-50 bg-gradient-to-r from-[rgba(37, 150, 190)] via-[#1a1f45cc] to-[#ff4500cc] backdrop-blur-md overflow-visible">
+        <header 
+            className={`fixed top-0 left-0 right-0 z-50 overflow-visible transition-all duration-300 ${
+                isScrolled 
+                    ? 'bg-gradient-to-br from-black/80 via-gray-900/80 to-softx-orange/10 backdrop-blur-lg' 
+                    : 'bg-gradient-to-br from-black via-gray-900 to-softx-orange/20'
+            }`}
+        >
             <div className="container mx-auto px-4 sm:px-6 lg:px-8">
-                <div className="flex items-center justify-center h-14 sm:h-16 lg:h-20 relative overflow-visible">
+                <div className="flex items-center justify-center h-12 sm:h-14 lg:h-14 relative overflow-visible">
                     {/* Centered Logo - Extended below header */}
                     <div className="absolute left-1/2 transform -translate-x-1/2 flex items-center top-0">
                         <div className="hover:scale-110 hover:drop-shadow-[0_0_10px_rgba(255,69,0,0.5)] transition-all duration-300 cursor-pointer">
                             <img
                                 src={logoImage}
                                 alt="SoftXSol Logo"
-                                className="h-16 sm:h-20 lg:h-22 lg:mt-6 w-auto object-contain"
+                                className="h-14 sm:h-16 lg:h-16 lg:mt-4 w-auto object-contain"
                                 onError={(e) => {
                                     e.target.style.display = 'none';
                                     e.target.nextSibling.style.display = 'flex';

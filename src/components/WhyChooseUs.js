@@ -21,19 +21,21 @@ const WhyChooseUs = () => {
     }
   };
 
-  // First image: starts from third image position, slides to original with fade
+  // First image: fade in with minimal movement
   const firstImageVariants = {
     hidden: {
-      x: 400, // Start from right (third image position)
-      opacity: 0.3,
-      zIndex: 1 // Behind middle image
+      x: 0,
+      opacity: 0,
+      scale: 0.9,
+      zIndex: 1
     },
     visible: {
-      x: 0, // Move to original position
+      x: 0,
       opacity: 1,
+      scale: 1,
       zIndex: 1,
       transition: {
-        duration: 1.2,
+        duration: 1.0,
         ease: "easeOut"
       }
     }
@@ -42,36 +44,38 @@ const WhyChooseUs = () => {
   // Middle image: scales in from small with bounce
   const middleImageVariants = {
     hidden: {
-      scale: 0.3,
+      scale: 0.85,
       opacity: 0,
-      zIndex: 10 // Front layer
+      zIndex: 10
     },
     visible: {
       scale: 1,
       opacity: 1,
       zIndex: 10,
       transition: {
-        duration: 1.2,
+        duration: 1.0,
         ease: "easeOut",
         type: "spring",
-        bounce: 0.3
+        bounce: 0.2
       }
     }
   };
 
-  // Third image: starts from first image position, slides to original with fade
+  // Third image: fade in with minimal movement
   const thirdImageVariants = {
     hidden: {
-      x: -400, // Start from left (first image position)
-      opacity: 0.3,
-      zIndex: 1 // Behind middle image
+      x: 0,
+      opacity: 0,
+      scale: 0.9,
+      zIndex: 1
     },
     visible: {
-      x: 0, // Move to original position
+      x: 0,
       opacity: 1,
+      scale: 1,
       zIndex: 1,
       transition: {
-        duration: 1.2,
+        duration: 1.0,
         ease: "easeOut"
       }
     }
@@ -80,17 +84,19 @@ const WhyChooseUs = () => {
   // Stats card scale-in animation with bounce
   const statsVariants = {
     hidden: {
-      scale: 0.3,
-      opacity: 0
+      scale: 0.9,
+      opacity: 0,
+      y: 10
     },
     visible: {
       scale: 1,
       opacity: 1,
+      y: 0,
       transition: {
-        duration: 1.2,
+        duration: 1.0,
         ease: "easeOut",
         type: "spring",
-        bounce: 0.4
+        bounce: 0.2
       }
     }
   };
@@ -161,7 +167,7 @@ const WhyChooseUs = () => {
       className="py-16 relative"
       initial="hidden"
       whileInView="visible"
-      viewport={{ once: true, amount: 0.3 }}
+      viewport={{ once: true, amount: 0.1 }}
       variants={containerVariants}
     >
       <div className="container mx-auto px-4 sm:px-6 lg:px-8 relative z-20">
@@ -181,20 +187,20 @@ const WhyChooseUs = () => {
         <div className="relative">
 
           {/* Three Team Members */}
-          <div className="flex flex-col lg:flex-row justify-center items-end gap-8 lg:gap-12 mb-12">
+          <div className="flex flex-col lg:flex-row justify-center items-center lg:items-end gap-8 lg:gap-12 mb-12">
 
-            {/* Team Member 1 - Left (slides from right, behind middle) */}
+            {/* Team Member 1 - Left */}
             <motion.div
-              className="relative"
+              className="relative mx-auto lg:mx-0"
               variants={firstImageVariants}
               style={{ zIndex: 1 }}
             >
               {/* Orange rectangle behind */}
-              <div className="absolute -top-6 -left-6 w-32 h-48 bg-softx-orange rounded-2xl -z-10"></div>
+              <div className="absolute -top-4 -left-4 lg:-top-6 lg:-left-6 w-24 h-40 lg:w-32 lg:h-48 bg-softx-orange rounded-2xl -z-10"></div>
               <img
                 src={person1Image}
                 alt="Team Member 1"
-                className="w-48 h-64 lg:w-56 lg:h-72 rounded-2xl object-cover shadow-2xl"
+                className="w-40 h-56 sm:w-48 sm:h-64 lg:w-56 lg:h-72 rounded-2xl object-cover shadow-2xl"
                 onError={(e) => {
                   e.target.style.display = 'none';
                   e.target.nextSibling.style.display = 'block';
@@ -203,23 +209,23 @@ const WhyChooseUs = () => {
               <ImagePlaceholder
                 src=""
                 alt="Team Member 1"
-                className="hidden w-48 h-64 lg:w-56 lg:h-72 rounded-2xl object-cover shadow-2xl"
+                className="hidden w-40 h-56 sm:w-48 sm:h-64 lg:w-56 lg:h-72 rounded-2xl object-cover shadow-2xl"
                 placeholderText="Person1.png"
               />
             </motion.div>
 
-            {/* Team Member 2 - Center (scales in with bounce, front layer) */}
+            {/* Team Member 2 - Center */}
             <motion.div
-              className="relative"
+              className="relative mx-auto lg:mx-0"
               variants={middleImageVariants}
               style={{ zIndex: 10 }}
             >
               {/* Orange rectangle behind */}
-              <div className="absolute -top-8 -right-8 w-36 h-56 bg-softx-orange rounded-2xl -z-10"></div>
+              <div className="absolute -top-6 -right-6 lg:-top-8 lg:-right-8 w-28 h-48 lg:w-36 lg:h-56 bg-softx-orange rounded-2xl -z-10"></div>
               <img
                 src={p22Image}
                 alt="Team Member 2"
-                className="w-52 h-72 lg:w-60 lg:h-80 rounded-2xl object-cover shadow-2xl"
+                className="w-44 h-64 sm:w-52 sm:h-72 lg:w-60 lg:h-80 rounded-2xl object-cover shadow-2xl"
                 onError={(e) => {
                   e.target.style.display = 'none';
                   e.target.nextSibling.style.display = 'block';
@@ -228,23 +234,23 @@ const WhyChooseUs = () => {
               <ImagePlaceholder
                 src=""
                 alt="Team Member 2"
-                className="hidden w-52 h-72 lg:w-60 lg:h-80 rounded-2xl object-cover shadow-2xl"
+                className="hidden w-44 h-64 sm:w-52 sm:h-72 lg:w-60 lg:h-80 rounded-2xl object-cover shadow-2xl"
                 placeholderText="P22.png"
               />
             </motion.div>
 
-            {/* Team Member 3 - Right (slides from left, behind middle) */}
+            {/* Team Member 3 - Right */}
             <motion.div
-              className="relative"
+              className="relative mx-auto lg:mx-0"
               variants={thirdImageVariants}
               style={{ zIndex: 1 }}
             >
               {/* Orange rectangle behind */}
-              <div className="absolute -bottom-6 -right-6 w-32 h-48 bg-softx-orange rounded-2xl -z-10"></div>
+              <div className="absolute -bottom-4 -right-4 lg:-bottom-6 lg:-right-6 w-24 h-40 lg:w-32 lg:h-48 bg-softx-orange rounded-2xl -z-10"></div>
               <img
                 src={p3Image}
                 alt="Team Member 3"
-                className="w-48 h-64 lg:w-56 lg:h-72 rounded-2xl object-cover shadow-2xl"
+                className="w-40 h-56 sm:w-48 sm:h-64 lg:w-56 lg:h-72 rounded-2xl object-cover shadow-2xl"
                 onError={(e) => {
                   e.target.style.display = 'none';
                   e.target.nextSibling.style.display = 'block';
@@ -253,7 +259,7 @@ const WhyChooseUs = () => {
               <ImagePlaceholder
                 src=""
                 alt="Team Member 3"
-                className="hidden w-48 h-64 lg:w-56 lg:h-72 rounded-2xl object-cover shadow-2xl"
+                className="hidden w-40 h-56 sm:w-48 sm:h-64 lg:w-56 lg:h-72 rounded-2xl object-cover shadow-2xl"
                 placeholderText="P3.png"
               />
             </motion.div>
@@ -261,31 +267,31 @@ const WhyChooseUs = () => {
 
           {/* Stats Cards */}
           <motion.div
-            className="flex flex-col sm:flex-row justify-center gap-6 lg:gap-8"
+            className="flex flex-col sm:flex-row justify-center gap-4 sm:gap-6 lg:gap-8 px-4"
             variants={containerVariants}
           >
             {stats.map((stat, index) => (
               <motion.div
                 key={index}
                 variants={statsVariants}
-                className={`rounded-3xl border-2 p-6 lg:p-8 text-left min-w-[280px] transition-all duration-300 ${stat.active
+                className={`rounded-2xl sm:rounded-3xl border-2 p-4 sm:p-6 lg:p-8 text-left w-full sm:min-w-[240px] lg:min-w-[280px] transition-all duration-300 ${stat.active
                   ? 'border-softx-orange text-white'
-                  : 'border-white/40 text-white'
+                  : 'border-white/60 text-white'
                   }`}
                 whileHover={{
                   scale: 1.05,
                   transition: { duration: 0.2 }
                 }}
               >
-                <div className="flex items-center justify-between gap-6">
-                  <div className="text-5xl lg:text-6xl font-bold">
+                <div className="flex items-center justify-between gap-3 sm:gap-6">
+                  <div className="text-4xl sm:text-5xl lg:text-6xl font-bold">
                     <AnimatedCounter
                       target={stat.number}
                       index={index}
                       suffix={stat.suffix}
                     />
                   </div>
-                  <div className="text-sm lg:text-base font-medium opacity-90 text-right">
+                  <div className="text-xs sm:text-sm lg:text-base font-medium opacity-90 text-right">
                     {stat.label}
                   </div>
                 </div>

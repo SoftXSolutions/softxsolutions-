@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+import { motion } from 'framer-motion';
 
 const Contact = () => {
   const [formData, setFormData] = useState({
@@ -88,22 +89,43 @@ const Contact = () => {
     }
   ];
 
+  const containerVariants = {
+    hidden: { opacity: 0 },
+    visible: {
+      opacity: 1,
+      transition: { staggerChildren: 0.15, delayChildren: 0.1 }
+    }
+  };
+
+  const fadeInUp = {
+    hidden: { y: 24, opacity: 0 },
+    visible: { y: 0, opacity: 1, transition: { duration: 0.8, ease: 'easeOut' } }
+  };
+
   return (
-    <section id="contact" className="py-16 relative">
+    <motion.section
+      id="contact"
+      className="py-16 relative"
+      initial="hidden"
+      whileInView="visible"
+      viewport={{ once: true, amount: 0.2 }}
+      variants={containerVariants}
+    >
       <div className="container mx-auto px-4 sm:px-6 lg:px-8 relative z-20">
         {/* Section Header */}
-        <div className="text-center mb-16">
+        <motion.div className="text-center mb-16" variants={fadeInUp}>
           <h2 className="text-4xl sm:text-5xl md:text-6xl font-bold text-softx-white mb-6">
             Get In <span className="text-softx-orange">Touch</span>
           </h2>
           <p className="text-xl text-gray-300 max-w-3xl mx-auto">
             Ready to transform your ideas into reality? Let's discuss your project and create something amazing together.
           </p>
-        </div>
+        </motion.div>
 
-        <div className="grid grid-cols-1 lg:grid-cols-2 gap-12">
+        <motion.div className="border border-white/20 rounded-2xl p-6 lg:p-8" variants={fadeInUp}>
+          <div className="grid grid-cols-1 lg:grid-cols-2 gap-12">
           {/* Contact Information */}
-          <div>
+          <motion.div variants={fadeInUp}>
             <h3 className="text-2xl font-bold text-softx-white mb-8">
               Let's Start a Conversation
             </h3>
@@ -134,7 +156,7 @@ const Contact = () => {
             </div>
 
             {/* Social Links */}
-            <div className="mt-8">
+            <motion.div className="mt-8" variants={fadeInUp}>
               <h4 className="text-softx-white font-semibold mb-4">Follow Us</h4>
               <div className="flex space-x-4">
                 <a href="#" className="text-softx-orange hover:text-softx-orange-light transition-colors duration-300">
@@ -150,11 +172,11 @@ const Contact = () => {
                   <span className="text-2xl">📷</span>
                 </a>
               </div>
-            </div>
-          </div>
+            </motion.div>
+          </motion.div>
 
           {/* Contact Form */}
-          <div className="bg-transparent rounded-xl p-8">
+          <motion.div className="bg-transparent rounded-xl p-8" variants={fadeInUp}>
             <h3 className="text-2xl font-bold text-softx-white mb-6">Send us a Message</h3>
             
             <form onSubmit={handleSubmit} className="space-y-6">
@@ -271,10 +293,11 @@ const Contact = () => {
                 <p className="text-softx-orange text-sm">{status}</p>
               )}
             </form>
+          </motion.div>
           </div>
-        </div>
+        </motion.div>
       </div>
-    </section>
+    </motion.section>
   );
 };
 
