@@ -23,15 +23,14 @@ const Header = () => {
     };
 
     return (
-        <header 
-            className={`fixed top-0 left-0 right-0 z-50 overflow-visible transition-all duration-300 ${
-                isScrolled 
-                    ? 'bg-gradient-to-br from-black/80 via-gray-900/80 to-softx-orange/10 backdrop-blur-lg' 
-                    : 'bg-gradient-to-br from-black via-gray-900 to-softx-orange/20'
-            }`}
+        <header
+            className={`fixed top-0 left-0 right-0 z-50 overflow-visible transition-all duration-300 ${isScrolled
+                ? 'bg-white/10 backdrop-blur-xl border-b border-white/20'
+                : 'bg-white/5 backdrop-blur-lg'
+                }`}
         >
             <div className="container mx-auto px-4 sm:px-6 lg:px-8">
-                <div className="flex items-center justify-center h-12 sm:h-14 lg:h-14 relative overflow-visible">
+                <div className="flex items-center justify-center h-16 sm:h-18 lg:h-20 relative overflow-visible">
                     {/* Centered Logo - Extended below header */}
                     <div className="absolute left-1/2 transform -translate-x-1/2 flex items-center top-0">
                         <div className="hover:scale-110 hover:drop-shadow-[0_0_10px_rgba(255,69,0,0.5)] transition-all duration-300 cursor-pointer">
@@ -60,19 +59,22 @@ const Header = () => {
                     <nav className="hidden md:flex items-center space-x-6 lg:space-x-8 ml-auto">
                         <button
                             onClick={() => scrollToSection('services')}
-                            className="text-softx-white hover:text-softx-orange transition-colors duration-300 font-medium text-base lg:text-lg"
+                            className="text-softx-white hover:text-softx-orange transition-colors duration-300 font-normal text-base lg:text-lg"
+                            style={{ fontFamily: 'Poppins, sans-serif' }}
                         >
                             Services
                         </button>
                         <button
                             onClick={() => scrollToSection('faqs')}
-                            className="text-softx-white hover:text-softx-orange transition-colors duration-300 font-medium text-base lg:text-lg"
+                            className="text-softx-white hover:text-softx-orange transition-colors duration-300 font-normal text-base lg:text-lg"
+                            style={{ fontFamily: 'Poppins, sans-serif' }}
                         >
                             FAQ's
                         </button>
                         <button
                             onClick={() => scrollToSection('contact')}
-                            className="text-softx-white hover:text-softx-orange transition-colors duration-300 font-medium text-base lg:text-lg"
+                            className="text-softx-white hover:text-softx-orange transition-colors duration-300 font-normal text-base lg:text-lg"
+                            style={{ fontFamily: 'Poppins, sans-serif' }}
                         >
                             Contact Us
                         </button>

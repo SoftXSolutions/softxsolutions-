@@ -4,6 +4,7 @@ import logo1Image from '../assets/images/logo1.png';
 const WebDevelopment = () => {
   const [isVisible, setIsVisible] = useState(false);
   const [activeService, setActiveService] = useState('Web Development');
+  const [activeTag, setActiveTag] = useState({});
   const [contentVisible, setContentVisible] = useState(true);
   const [boxEnter, setBoxEnter] = useState(true);
   const sectionRef = useRef(null);
@@ -19,33 +20,43 @@ const WebDevelopment = () => {
   const serviceContent = {
     'Web Development': {
       title: 'Web Development',
-      tags: ['Front End', 'Python Backend', 'Node.JS'],
-      desc:
-        "Your website shouldn't be a brochure; it should be your best salesperson. We build lightning-fast, SEO-first sites that load in milliseconds, rank quickly, and turn visitors into customers. From pixel-perfect front ends to rock-solid Python/Node back ends, every page is secure, accessible, and built to scale, so you can launch faster, sell more, and grow without limits. Ready to ship results, not just pages?",
+      tagData: {
+        'Front End': "Your website shouldn't be a brochure; it should be your best salesperson. We build lightning-fast, SEO-first sites that load in milliseconds, rank quickly, and turn visitors into customers. From pixel-perfect front ends to rock-solid Python/Node back ends, every page is secure, accessible, and built to scale, so you can launch faster, sell more, and grow without limits.",
+        'Python Backend': "Build robust, scalable backends with Python. From Django and Flask APIs to data processing pipelines, we create secure server architectures that handle millions of requests. Database optimization, authentication systems, and seamless third-party integrations—all production-ready and battle-tested.",
+        'Node.JS': "Lightning-fast Node.js backends for real-time applications. We build RESTful and GraphQL APIs, WebSocket servers, and microservices that scale effortlessly. From Express to NestJS, every endpoint is optimized for speed, security, and reliability with comprehensive error handling and monitoring."
+      }
     },
     'A.I Development': {
       title: 'A.I. Development',
-      tags: ['Calling Agents', 'Automations', 'Chatbots', 'ML, CV & NLP'],
-      desc:
-        'Give your business a brain. We build production-ready AI voice calling agents, chatbots that convert, and automations that erase repetitive work. Our custom ML/CV/NLP models learn from your data and plug into your stack (Twilio, Vapi, WhatsApp, Shopify, CRMs) with analytics and human-in-the-loop controls for safe scaling.',
+      tagData: {
+        'Calling Agents': "AI-powered voice agents that handle customer calls 24/7. From qualification to booking, our intelligent systems understand context, handle objections, and close deals while you sleep. Seamless CRM integration with full conversation analytics and quality scoring.",
+        'Automations': "Erase repetitive work with intelligent automation. From data entry to complex workflows, our AI systems learn your processes and execute them flawlessly. Zapier on steroids—custom triggers, multi-step logic, and error handling that thinks for itself.",
+        'Chatbots': "Chatbots that actually convert. Natural language understanding, context retention, and personality that matches your brand. Deploy across web, WhatsApp, and messaging platforms with lead capture, appointment booking, and instant support built in.",
+        'ML, CV & NLP': "Custom machine learning models trained on your data. Computer vision for image recognition, NLP for text analysis, and predictive models that drive decisions. From prototype to production with monitoring, retraining pipelines, and explainable AI."
+      }
     },
     'App Development': {
       title: 'App Development',
-      tags: ['Android App', 'IOS App'],
-      desc:
-        "Turn your idea into an app people keep on their home screen. We design and ship blazing-fast Android & iOS apps with clean architecture, offline-first flows, push notifications, and real-time APIs built to scale from 100 to 1M users. Product strategy, UX/UI, QA, analytics, store launch—end to end.",
+      tagData: {
+        'Android App': "Native Android apps that feel premium. Material Design UI, smooth animations, and optimized performance from low-end to flagship devices. Kotlin-first development with offline sync, push notifications, and seamless Google services integration. Store optimization and launch included.",
+        'IOS App': "Swift-built iOS apps that delight users. Pixel-perfect UI matching Apple's Human Interface Guidelines, smooth animations, and native performance. CoreData persistence, CloudKit sync, and App Store optimization. TestFlight beta testing and App Store submission handled end-to-end."
+      }
     },
     'Custom Software': {
       title: 'Custom Software',
-      tags: ['Product Development', 'Cloud App', 'Branding'],
-      desc:
-        "When off‑the‑shelf won't cut it, we design and build software precisely around your workflow. Cloud‑native apps, internal tools, CRMs, dashboards, and deep integrations engineered for speed, security, and scale. Prototype fast, iterate with CI/CD, and own the code and the IP.",
+      tagData: {
+        'Product Development': "From idea to launched product. We handle the full lifecycle—user research, technical architecture, MVP development, and iterative releases. Agile sprints with weekly demos, user testing, and data-driven pivots. Code ownership and IP transfer included.",
+        'Cloud App': "Cloud-native applications that scale automatically. AWS, Azure, or GCP architecture optimized for cost and performance. Containerized deployments, auto-scaling, multi-region redundancy, and zero-downtime updates. DevOps and monitoring baked in from day one.",
+        'Branding': "Brand identity that resonates. From logo design to full brand guidelines, we create cohesive visual systems that tell your story. Color palettes, typography, iconography, and brand voice—everything teams need to stay consistent across all touchpoints."
+      }
     },
     'Maintenance & Support': {
       title: 'Maintenance & Support',
-      tags: ['AWS & Cloud', 'Market Launch', 'UI Design'],
-      desc:
-        "Launch day isn't the finish line—it's where we take over. Monitoring, patching, performance tuning, backups, and 24/7 incident response keep you always‑on. On the growth side, we handle SEO, content updates, and roadmaps with clear reporting.",
+      tagData: {
+        'AWS & Cloud': "24/7 cloud infrastructure management. Monitoring, security patches, cost optimization, and disaster recovery. We keep your AWS, Azure, or GCP environment healthy, secure, and cost-effective with proactive alerts and monthly optimization reports.",
+        'Market Launch': "Go-to-market strategy and execution. Beta testing, App Store/Play Store submission, landing pages, email campaigns, and growth analytics. We handle the launch checklist so you can focus on building traction and user feedback.",
+        'UI Design': "Continuous UX/UI improvements based on real user data. A/B testing, heatmaps, and conversion optimization. Design systems that evolve with your product, maintaining consistency while adapting to new features and user needs."
+      }
     },
   };
 
@@ -73,14 +84,22 @@ const WebDevelopment = () => {
     };
   }, []);
 
-  // Animate content on tab change
+  // Animate content on tab change and set first tag as active
   useEffect(() => {
     setContentVisible(false);
     setBoxEnter(false);
+    const firstTag = Object.keys(serviceContent[activeService].tagData)[0];
+    setActiveTag(prev => ({ ...prev, [activeService]: firstTag }));
     const t1 = setTimeout(() => setContentVisible(true), 30);
     const t2 = setTimeout(() => setBoxEnter(true), 30);
     return () => { clearTimeout(t1); clearTimeout(t2); };
   }, [activeService]);
+
+  // Initialize active tag for the first service
+  useEffect(() => {
+    const firstTag = Object.keys(serviceContent['Web Development'].tagData)[0];
+    setActiveTag({ 'Web Development': firstTag });
+  }, []);
 
   return (
     <section
@@ -199,10 +218,11 @@ const WebDevelopment = () => {
 
                 {/* Tech Stack Buttons */}
                 <div className={`flex flex-wrap justify-center lg:justify-start gap-5 mb-6`}>
-                  {serviceContent[activeService].tags.map((tag, index) => (
+                  {Object.keys(serviceContent[activeService].tagData).map((tag) => (
                     <button
                       key={tag}
-                      className={`px-4 py-2 rounded-lg border text-sm font-medium transition-all duration-300 ${index === 0
+                      onClick={() => setActiveTag(prev => ({ ...prev, [activeService]: tag }))}
+                      className={`px-4 py-2 rounded-lg border text-sm font-medium transition-all duration-300 ${activeTag[activeService] === tag
                         ? 'bg-softx-orange text-white border-softx-orange'
                         : 'bg-transparent text-gray-300 border-gray-600 hover:border-softx-orange hover:text-softx-orange'
                         }`}
@@ -214,7 +234,7 @@ const WebDevelopment = () => {
 
                 {/* Description */}
                 <p className={`text-gray-300 text-base lg:text-sm leading-relaxed`}>
-                  {serviceContent[activeService].desc}
+                  {activeTag[activeService] && serviceContent[activeService].tagData[activeTag[activeService]]}
                 </p>
 
               </div>

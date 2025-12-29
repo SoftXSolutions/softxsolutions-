@@ -178,8 +178,7 @@ const WhyChooseUs = () => {
             Why Choose Us
           </h2>
           <p className="text-lg text-gray-300 max-w-2xl mx-auto leading-relaxed">
-            Lorem ipsum dolor sit amet, consectetur adipiscing elit.
-            Morbi blandit ligula vel vestibulum commodo.
+            We help businesses grow by building modern, secure, and scalable digital solutions. From planning to deployment, we manage every project with precision and accountability.
           </p>
         </div>
 

@@ -544,7 +544,7 @@ const OurProjects = () => {
                   <img
                     src={wcumImage}
                     alt="Mobile Phones"
-                    className="w-80 h-auto object-contain"
+                    className="w-80 h-auto object-contain transform scale-150"
                     onError={(e) => {
                       e.target.style.display = 'none';
                       e.target.nextSibling.style.display = 'block';
@@ -553,7 +553,7 @@ const OurProjects = () => {
                   <ImagePlaceholder
                     src=""
                     alt="Mobile Phones"
-                    className="hidden w-80 h-60 rounded-2xl object-cover"
+                    className="hidden w-80 h-60 rounded-2xl object-cover transform scale-150"
                     placeholderText="wcum.png"
                   />
 
