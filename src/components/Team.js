@@ -160,7 +160,7 @@ const Team = () => {
 
         {/* Stats and Testimonials Container */}
         <motion.div
-          className="p-8 lg:p-12 bg-transparent mb-12 border border-white/40 rounded-xl"
+          className="p-8 lg:p-12 bg-black/50 backdrop-blur-sm mb-12 border border-white/40 rounded-xl"
           variants={scaleIn}
         >
           <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center mb-12">
@@ -242,7 +242,7 @@ const Team = () => {
 
             {/* Professional Card */}
             <motion.div
-              className="border border-white/40 rounded-xl p-6 bg-transparent text-center"
+              className="border border-white/40 rounded-xl p-6 bg-black/50 backdrop-blur-sm text-center"
               variants={cardVariants}
               whileHover={{
                 scale: 1.05,
@@ -305,7 +305,7 @@ const Team = () => {
 
             {/* Good Quality Card */}
             <motion.div
-              className="border border-white/40 rounded-xl p-6 bg-transparent text-center"
+              className="border border-white/40 rounded-xl p-6 bg-black/50 backdrop-blur-sm text-center"
               variants={cardVariants}
               whileHover={{
                 scale: 1.05,

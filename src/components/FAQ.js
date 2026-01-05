@@ -124,7 +124,7 @@ const FAQ = () => {
         return (
           <motion.div
             key={actualIndex}
-            className="bg-transparent overflow-hidden border border-white/40 rounded-xl"
+            className="bg-black/50 backdrop-blur-sm overflow-hidden border border-white/40 rounded-xl"
             whileHover={{
               scale: 1.02,
               transition: { duration: 0.3, ease: "easeInOut" }

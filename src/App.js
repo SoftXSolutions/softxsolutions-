@@ -16,12 +16,26 @@ function App() {
   return (
     <div className="App relative min-h-screen">
       {/* Main Background Gradient */}
-      <div className="fixed inset-0 bg-gradient-to-br from-black via-gray-900 to-softx-orange/20 -z-50"></div>
-      
+      {/* Video Background */}
+      <div className="fixed inset-0 -z-50 overflow-hidden">
+        <video
+          autoPlay
+          loop
+          muted
+          playsInline
+          className="absolute top-0 left-0 w-full h-full object-cover object-center"
+        >
+          <source src="/videos/video.mp4" type="video/mp4" />
+        </video>
+      </div>
+
+      {/* Main Background Gradient - Restored with Transparency */}
+      <div className="fixed inset-0 bg-gradient-to-br from-black/70 via-gray-900/55 to-softx-orange/10 -z-50"></div>
+
       {/* Layered Gradient Overlays for Depth */}
-      <div className="fixed inset-0 bg-gradient-to-b from-transparent via-black/10 to-softx-orange/10 -z-40"></div>
+      <div className="fixed inset-0 bg-gradient-to-b from-transparent via-black/10 to-softx-orange/5 -z-40"></div>
       <div className="fixed inset-0 bg-gradient-to-r from-black/20 via-transparent to-softx-orange/5 -z-30"></div>
-      
+
       <Header />
       <main className="relative z-10">
         <Hero />

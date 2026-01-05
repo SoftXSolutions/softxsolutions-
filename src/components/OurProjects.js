@@ -177,7 +177,7 @@ const OurProjects = () => {
           {/* 1. UI/UX Design */}
           <motion.div
             variants={slideFromLeft}
-            className="border border-white/60 rounded-xl p-6 lg:p-8 bg-transparent"
+            className="border border-white/60 rounded-xl p-6 lg:p-8 bg-black/50 backdrop-blur-sm"
           >
             <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 items-start">
               <div>
@@ -201,7 +201,7 @@ const OurProjects = () => {
           {/* 2. Web Development */}
           <motion.div
             variants={slideFromRight}
-            className="border border-white/60 rounded-xl p-6 lg:p-8 bg-transparent"
+            className="border border-white/60 rounded-xl p-6 lg:p-8 bg-black/50 backdrop-blur-sm"
           >
             <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 items-start">
               <div>
@@ -224,7 +224,7 @@ const OurProjects = () => {
           {/* 3. Mobile Development */}
           <motion.div
             variants={slideFromLeft}
-            className="border border-white/60 rounded-xl p-6 lg:p-8 bg-transparent"
+            className="border border-white/60 rounded-xl p-6 lg:p-8 bg-black/50 backdrop-blur-sm"
           >
             <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 items-start">
               <div>
@@ -247,7 +247,7 @@ const OurProjects = () => {
           {/* 4. Cloud Services */}
           <motion.div
             variants={slideFromRight}
-            className="border border-white/60 rounded-xl p-6 lg:p-8 bg-transparent"
+            className="border border-white/60 rounded-xl p-6 lg:p-8 bg-black/50 backdrop-blur-sm"
           >
             <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 items-start">
               <div>
@@ -465,7 +465,7 @@ const OurProjects = () => {
             </motion.div>
 
             <motion.div className="col-span-1 lg:col-span-2" variants={slideFromRight}>
-              <div className={`border border-white/40 rounded-2xl p-4 sm:p-6 lg:p-8 transition-all duration-500 ${buildVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-2'}`}>
+              <div className={`border border-white/40 rounded-2xl p-4 sm:p-6 lg:p-8 bg-black/50 backdrop-blur-sm transition-all duration-500 ${buildVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-2'}`}>
                 <motion.div
                   key={buildTab}
                   className={`grid grid-cols-1 ${buildContent[buildTab].length > 1 ? 'lg:grid-cols-2' : 'lg:grid-cols-1'} gap-8`}
@@ -501,7 +501,7 @@ const OurProjects = () => {
           variants={scaleIn}
         >
           <motion.div
-            className="border border-white/60 rounded-xl p-6 sm:p-8 lg:p-12 bg-transparent"
+            className="border border-white/60 rounded-xl p-6 sm:p-8 lg:p-12 bg-black/50 backdrop-blur-sm"
             whileHover={{
               scale: 1.01,
               transition: { duration: 0.4, ease: "easeInOut" }

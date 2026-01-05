@@ -164,7 +164,7 @@ const Hero = () => {
           {/* Mobile Info Cards - Below the hero content */}
           <div className="relative z-40 space-y-4 max-w-md mx-auto px-4">
             <motion.div
-              className="bg-transparent border border-white/30 rounded-2xl p-5"
+              className="bg-black/50 backdrop-blur-sm border border-white/30 rounded-2xl p-5"
               variants={fadeInUp}
             >
               <img src={softxsolLogo} alt="SoftXSol Logo" className="h-7 mb-3 inline-block object-contain" />
@@ -172,7 +172,7 @@ const Hero = () => {
             </motion.div>
 
             <motion.div
-              className="bg-transparent border border-softx-orange rounded-2xl p-5 text-center"
+              className="bg-black/50 backdrop-blur-sm border border-softx-orange rounded-2xl p-5 text-center"
               variants={fadeInUp}
               initial={{ y: 20, opacity: 0 }}
               animate={{ y: 0, opacity: 1 }}
@@ -186,7 +186,7 @@ const Hero = () => {
             </motion.div>
 
             <motion.div
-              className="bg-transparent border border-white/30 rounded-2xl rounded-tr-[32px] p-5"
+              className="bg-black/50 backdrop-blur-sm border border-white/30 rounded-2xl rounded-tr-[32px] p-5"
               variants={fadeInUp}
             >
               <p className="text-gray-300 text-sm mb-4 leading-relaxed">Let's create something amazing together with SoftXSolutions</p>
@@ -249,7 +249,7 @@ const Hero = () => {
 
           {/* Top Left Info Box - Web Development */}
           <motion.div
-            className="absolute top-52 left-6 lg:left-12 xl:left-20 z-30"
+            className="absolute top-52 left-6 lg:left-12 xl:left-20 z-30 bg-black/50 backdrop-blur-sm border border-white/20 rounded-2xl rounded-tr-[40px] p-6"
             variants={containerVariants}
           >
             <ul className="space-y-4 text-white/70 text-sm lg:text-base tracking-wide">
@@ -293,7 +293,7 @@ const Hero = () => {
           {/* Top Right Info Box - SOFTXSOLUTIONS */}
           <div className="absolute top-32 right-4 lg:right-8 xl:right-16 z-30 max-w-xs">
             <motion.div
-              className="bg-transparent px-6 py-5 border border-white/20 rounded-2xl"
+              className="bg-black/50 backdrop-blur-sm px-6 py-5 border border-white/20 rounded-2xl"
               variants={slideFromRight}
               whileHover={{
                 scale: 1.02,
@@ -319,7 +319,7 @@ const Hero = () => {
           {/* Middle Right Info Box - Experience */}
           <div className="absolute top-1/2 right-4 lg:right-8 xl:right-16 transform -translate-y-1/2 z-30">
             <motion.div
-              className="bg-transparent px-8 py-6 text-center border border-white/20 rounded-2xl"
+              className="bg-black/50 backdrop-blur-sm px-8 py-6 text-center border border-white/20 rounded-2xl"
               variants={scaleIn}
               whileHover={{
                 scale: 1.05,
@@ -365,7 +365,7 @@ const Hero = () => {
             variants={slideFromLeft}
           >
             <motion.div
-              className="bg-transparent p-5 border border-white/20 rounded-2xl rounded-tr-[36px]"
+              className="bg-black/50 backdrop-blur-sm p-5 border border-white/20 rounded-2xl rounded-tr-[36px]"
               whileHover={{
                 scale: 1.02,
                 y: -5,

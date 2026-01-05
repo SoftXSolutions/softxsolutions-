@@ -13,7 +13,7 @@ const Footer = () => {
   };
 
   return (
-    <footer className="relative pt-16 pb-8">
+    <footer className="relative pt-10 pb-5 bg-[#0a0a0a]/80 backdrop-blur-sm">
       <div className="container mx-auto px-4 sm:px-6 lg:px-8 relative z-20">
 
         {/* Main Footer Content */}

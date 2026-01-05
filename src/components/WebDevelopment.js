@@ -166,7 +166,7 @@ const WebDevelopment = () => {
             </div>
           </div>
 
-          <div key={activeService} className={`border-2 border-gray-400/80 rounded-3xl p-8 lg:p-16 lg:pl-32 bg-black/30 backdrop-blur-sm shadow-2xl transition-all duration-700 ease-out transform ${isVisible && boxEnter
+          <div key={activeService} className={`border-2 border-gray-400/80 rounded-3xl p-8 lg:p-16 lg:pl-32 bg-black/50 backdrop-blur-sm shadow-2xl transition-all duration-700 ease-out transform ${isVisible && boxEnter
             ? 'translate-x-0 opacity-100'
             : '-translate-x-full opacity-0'
             }`}>

@@ -139,7 +139,7 @@ const Contact = () => {
           </p>
         </motion.div>
 
-        <motion.div className="border border-white/20 rounded-2xl p-6 lg:p-8" variants={fadeInUp}>
+        <motion.div className="border border-white/20 rounded-2xl p-6 lg:p-8 bg-black/50 backdrop-blur-sm" variants={fadeInUp}>
           <div className="grid grid-cols-1 lg:grid-cols-2 gap-12">
             {/* Contact Information */}
             <motion.div variants={fadeInUp}>

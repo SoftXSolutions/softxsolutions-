@@ -273,7 +273,7 @@ const WhyChooseUs = () => {
               <motion.div
                 key={index}
                 variants={statsVariants}
-                className={`rounded-2xl sm:rounded-3xl border-2 p-4 sm:p-6 lg:p-8 text-left w-full sm:min-w-[240px] lg:min-w-[280px] transition-all duration-300 ${stat.active
+                className={`rounded-2xl sm:rounded-3xl border-2 p-4 sm:p-6 lg:p-8 text-left w-full sm:min-w-[240px] lg:min-w-[280px] bg-black/50 backdrop-blur-sm transition-all duration-300 ${stat.active
                   ? 'border-softx-orange text-white'
                   : 'border-white/60 text-white'
                   }`}

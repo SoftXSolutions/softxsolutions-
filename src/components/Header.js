@@ -30,14 +30,14 @@ const Header = () => {
                 }`}
         >
             <div className="container mx-auto px-4 sm:px-6 lg:px-8">
-                <div className="flex items-center justify-center h-16 sm:h-18 lg:h-20 relative overflow-visible">
+                <div className="flex items-center justify-center h-14 sm:h-16 lg:h-16 relative overflow-visible">
                     {/* Centered Logo - Extended below header */}
                     <div className="absolute left-1/2 transform -translate-x-1/2 flex items-center top-0">
                         <div className="hover:scale-110 hover:drop-shadow-[0_0_10px_rgba(255,69,0,0.5)] transition-all duration-300 cursor-pointer">
                             <img
                                 src={logoImage}
                                 alt="SoftXSol Logo"
-                                className="h-14 sm:h-16 lg:h-16 lg:mt-4 w-auto object-contain"
+                                className="h-14 sm:h-16 lg:h-16 mt-1 lg:mt-3 w-auto object-contain"
                                 onError={(e) => {
                                     e.target.style.display = 'none';
                                     e.target.nextSibling.style.display = 'flex';
@@ -60,21 +60,21 @@ const Header = () => {
                         <button
                             onClick={() => scrollToSection('services')}
                             className="text-softx-white hover:text-softx-orange transition-colors duration-300 font-normal text-base lg:text-lg"
-                            style={{ fontFamily: 'Poppins, sans-serif' }}
+                            style={{ fontFamily: '"Barlow Condensed", sans-serif' }}
                         >
                             Services
                         </button>
                         <button
                             onClick={() => scrollToSection('faqs')}
                             className="text-softx-white hover:text-softx-orange transition-colors duration-300 font-normal text-base lg:text-lg"
-                            style={{ fontFamily: 'Poppins, sans-serif' }}
+                            style={{ fontFamily: '"Barlow Condensed", sans-serif' }}
                         >
                             FAQ's
                         </button>
                         <button
                             onClick={() => scrollToSection('contact')}
                             className="text-softx-white hover:text-softx-orange transition-colors duration-300 font-normal text-base lg:text-lg"
-                            style={{ fontFamily: 'Poppins, sans-serif' }}
+                            style={{ fontFamily: '"Barlow Condensed", sans-serif' }}
                         >
                             Contact Us
                         </button>
